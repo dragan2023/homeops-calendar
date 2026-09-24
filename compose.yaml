@@ -1,0 +1,17 @@
+services:
+  homeops:
+    build: .
+    ports:
+      - "8787:8787"
+    environment:
+      PORT: "8787"
+      HOST: "0.0.0.0"
+      DB_PATH: "/data/homeops.db"
+      HOME_NAME: "我家"
+      SESSION_SECRET: "请改成随机字符串"
+    volumes:
+      - homeops-data:/data
+    restart: unless-stopped
+
+volumes:
+  homeops-data:

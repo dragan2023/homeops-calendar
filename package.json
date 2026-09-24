@@ -1,0 +1,19 @@
+{
+  "name": "homeops-calendar",
+  "private": true,
+  "version": "0.1.0",
+  "description": "家庭仓管 + 家庭运营日历 + 待办提醒（PWA + MCP）",
+  "type": "module",
+  "packageManager": "pnpm@11.7.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "node scripts/free-port.mjs 8787 apps/api/src/server.ts && node --watch apps/api/src/server.ts",
+    "start": "node scripts/free-port.mjs 8787 apps/api/src/server.ts && node apps/api/src/server.ts",
+    "db:migrate": "node packages/db/src/cli.ts migrate",
+    "smoke": "node scripts/smoke.mjs",
+    "check:themes": "node design/_raw/check-theme-contrast.mjs",
+    "test:mobile": "npm --prefix mobile test"
+  }
+}

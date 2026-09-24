@@ -1,0 +1,3 @@
+import fs from 'node:fs';
+fs.appendFileSync('design/README.md', "\n---\n\n## 五、追加（2026-09-21）：多主题可切换的正式原型\n\n你说的\"多设计几套 + App 内按钮切主题\"已经做成一版：**一套 App，8 套主题，右上角按钮随时切**。\n\n- 文件：`E:\\python_project\\家用仓管app\\design\\prototypes\\themed-app.html`\n- 主题清单与令牌契约（前端照此实现）：`E:\\python_project\\家用仓管app\\design\\THEMES.md`\n- 8 套主题：瑞士极简 / 新粗野 / 柔和黏土 / 卡通粉 / 机甲 HUD / 暗夜护眼 / 孟菲斯 80s / 极光玻璃\n- 切换入口在页面右上角\"🎨 主题名\"按钮（图标是 SVG），点开是 8 张带真实色板的卡片，点一下立即预览；选择会被记住。\n- 也可以直接在地址栏加 `#theme=mecha` 之类的参数打开指定主题。\n\n下面 A/B/C 三份单主题原型保留，用来单独细看某一种设计语言的完整效果。\n", 'utf8');
+console.log('README appended, size=' + fs.statSync('design/README.md').size);

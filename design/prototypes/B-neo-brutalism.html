@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="zh-CN" data-prototype="B-neo-brutalism">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>原型B · 新粗野主义台账 | 家庭仓管日历</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   原型 B —— 新粗野主义 / 硬核台账 (Brutalism + Bento, bold & dense)
+   设计语言：3px 黑边、硬投影、零圆角、全等宽字体、可见网格、荧光黄
+   ========================================================================== */
+:root{
+  --paper:#F4F1EA; --card:#FFFFFF; --ink:#0A0A0A; --ink-2:#2B2B2B;
+  --muted:#4A4A4A; --line:#0A0A0A;
+  --yellow:#FFE94A; --blue:#2F6BFF; --red:#FF3B30; --green:#00A86B; --violet:#8B5CF6;
+  --f:'Space Mono', ui-monospace, 'Cascadia Mono', 'Consolas', 'Microsoft YaHei', monospace;
+  --bd:3px solid var(--ink);
+  --shadow:6px 6px 0 var(--ink);
+  --shadow-sm:4px 4px 0 var(--ink);
+  --tap:48px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--f); background:#D9D4C7; color:var(--ink); font-size:14px; line-height:1.45;
+  display:flex; justify-content:center; padding:24px 0; -webkit-font-smoothing:antialiased}
+.phone{width:100%; max-width:430px; background:var(--paper); border:var(--bd); display:flex; flex-direction:column;
+  position:relative; min-height:880px; box-shadow:10px 10px 0 rgba(10,10,10,.35)}
+/* 顶栏：黑底反白 + 日期戳 */
+header{background:var(--ink); color:#fff; padding:14px 16px 12px; border-bottom:var(--bd)}
+.masthead{display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
+.masthead h1{margin:0; font-size:20px; font-weight:700; letter-spacing:-.02em; text-transform:uppercase}
+.masthead .sub{font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#C9C9C9; margin-top:4px}
+.stamp{border:2px solid var(--yellow); color:var(--yellow); font-size:11px; padding:4px 6px; white-space:nowrap; letter-spacing:.08em}
+.strip{display:grid; grid-template-columns:repeat(3,1fr); border-top:2px solid #3A3A3A; margin-top:12px}
+.strip div{padding:8px 0 2px; border-right:2px solid #3A3A3A}
+.strip div:last-child{border-right:0}
+.strip b{display:block; font-size:26px; line-height:1; font-weight:700}
+.strip span{font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#C9C9C9}
+main{flex:1; overflow-y:auto; padding:14px 14px 104px; background:var(--paper)}
+section[hidden]{display:none}
+.panel{border:var(--bd); background:var(--card); box-shadow:var(--shadow); margin-bottom:18px}
+.panel > h2{margin:0; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; background:var(--ink); color:#fff;
+  padding:7px 10px; display:flex; justify-content:space-between; align-items:center; gap:8px; font-weight:400}
+.panel > h2 em{font-style:normal; color:var(--yellow)}
+.bento{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px}
+.tile{border:var(--bd); background:var(--card); box-shadow:var(--shadow-sm); padding:12px; min-height:104px; display:flex; flex-direction:column; justify-content:space-between}
+.tile.wide{grid-column:1 / -1}
+.tile .k{font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+.tile .v{font-size:34px; font-weight:700; line-height:1; letter-spacing:-.03em}
+.tile .v small{font-size:12px; font-weight:400; letter-spacing:0}
+.tile.accent{background:var(--yellow)}
+.tile.dark{background:var(--ink); color:#fff; border-color:var(--ink)}
+.tile.dark .k{color:#C9C9C9}
+.bar{height:10px; border:2px solid var(--ink); background:#fff; position:relative}
+.bar i{display:block; height:100%; background:var(--red)}
+.li{display:flex; align-items:center; gap:10px; padding:10px; border-bottom:2px solid var(--ink); background:var(--card); min-height:var(--tap);
+  width:100%; text-align:left; font:inherit; color:inherit; border-left:0;border-right:0;border-top:0; cursor:pointer}
+.li:last-child{border-bottom:0}
+.li:active{background:var(--yellow)}
+.li .g{flex:1; min-width:0}
+.li .n{font-weight:700; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.li .s{font-size:11px; color:var(--muted); display:block; margin-top:3px}
+.qty{font-weight:700; font-size:18px; white-space:nowrap}
+.qty small{font-size:10px; font-weight:400}
+.badge2{font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border:2px solid var(--ink); padding:2px 5px; white-space:nowrap; background:#fff}
+.bg-red{background:var(--red); color:#fff}
+.bg-yellow{background:var(--yellow)}
+.bg-blue{background:var(--blue); color:#fff}
+.bg-green{background:var(--green); color:#fff}
+.bg-violet{background:var(--violet); color:#fff}
+.btns{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px}
+.btn{min-height:var(--tap); border:var(--bd); background:var(--card); font:inherit; font-weight:700; font-size:12px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; box-shadow:var(--shadow-sm);
+  text-transform:uppercase; letter-spacing:.06em; color:var(--ink)}
+.btn:active{transform:translate(3px,3px); box-shadow:2px 2px 0 var(--ink)}
+.btn.primary{background:var(--yellow)}
+.btn.dark{background:var(--ink); color:#fff; border-color:var(--ink)}
+.btn:focus-visible,.li:focus-visible,.ck:focus-visible,.tab:focus-visible,.day:focus-visible,.chip:focus-visible,
+input:focus-visible,select:focus-visible{outline:3px solid var(--blue); outline-offset:2px}
+/* 等宽图标：SVG 描边 2 */
+.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter}
+/* 日历：密集表格 */
+table.cal{width:100%; border-collapse:collapse; font-size:12px}
+table.cal th{font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:6px 0; border-bottom:2px solid var(--ink); color:var(--muted); font-weight:400}
+table.cal td{border:2px solid var(--ink); vertical-align:top; padding:0; width:14.28%; height:56px}
+td .dnum{display:block; font-size:12px; font-weight:700; padding:3px 5px}
+td .ev{display:block; font-size:9px; line-height:1.15; padding:1px 4px; margin:1px 2px; border:1px solid var(--ink); overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
+td.out{background:#E7E3D8; color:#8A8578}
+td.today{background:var(--yellow)}
+td.sel{outline:3px solid var(--blue); outline-offset:-3px}
+.legend2{display:flex; flex-wrap:wrap; gap:10px; padding:10px; border-top:2px solid var(--ink); font-size:10px; letter-spacing:.06em; text-transform:uppercase}
+.legend2 span{display:inline-flex; align-items:center; gap:5px}
+.sw{width:12px;height:12px;border:2px solid var(--ink); display:inline-block}
+/* 库存表头 */
+.tblhead{display:grid; grid-template-columns:1fr 78px 92px; gap:8px; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  padding:6px 10px; border-bottom:2px solid var(--ink); background:var(--paper); color:var(--muted)}
+.filters{display:flex; gap:8px; overflow-x:auto; padding-bottom:12px; scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.chip{min-height:40px; padding:0 12px; border:var(--bd); background:var(--card); font:inherit; font-size:11.5px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.06em; cursor:pointer; white-space:nowrap; box-shadow:var(--shadow-sm); color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--yellow)}
+.search{display:flex; align-items:center; gap:8px; border:var(--bd); background:var(--card); min-height:var(--tap); padding:0 10px; margin-bottom:12px; box-shadow:var(--shadow-sm)}
+.search input{border:0; outline:0; background:transparent; font:inherit; font-size:14px; width:100%; color:var(--ink)}
+/* 待办 */
+.ck{display:flex; align-items:center; gap:10px; padding:10px; border-bottom:2px solid var(--ink); background:var(--card); min-height:var(--tap); cursor:pointer}
+.ck:last-child{border-bottom:0}
+.ck .box{width:26px;height:26px;border:var(--bd); flex:0 0 auto; display:grid; place-items:center; background:#fff}
+.ck .box .ic{width:16px;height:16px; opacity:0}
+.ck[aria-checked="true"] .box{background:var(--green); border-color:var(--ink)}
+.ck[aria-checked="true"] .box .ic{opacity:1; stroke:#fff}
+.ck[aria-checked="true"] .n{text-decoration:line-through; color:var(--muted)}
+/* 底部导航 */
+nav{position:absolute; left:0; right:0; bottom:0; display:grid; grid-template-columns:repeat(4,1fr); background:var(--ink);
+  border-top:var(--bd); padding-bottom:env(safe-area-inset-bottom)}
+.tab{min-height:64px; border:0; border-right:2px solid #3A3A3A; background:var(--ink); color:#C9C9C9; font:inherit; font-size:10px;
+  font-weight:700; letter-spacing:.1em; text-transform:uppercase; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px; cursor:pointer; position:relative}
+.tab:last-child{border-right:0}
+.tab[aria-selected="true"]{background:var(--yellow); color:var(--ink)}
+.nbadge{position:absolute; top:8px; left:calc(50% + 8px); background:var(--red); color:#fff; border:2px solid var(--ink);
+  font-size:10px; min-width:20px; height:20px; display:grid; place-items:center; padding:0 3px}
+/* 弹层 */
+.scrim{position:absolute; inset:0; background:rgba(10,10,10,.55); opacity:0; pointer-events:none; transition:opacity .12s linear}
+.scrim.open{opacity:1; pointer-events:auto}
+.sheet{position:absolute; left:0; right:0; bottom:0; background:var(--paper); border-top:var(--bd); transform:translateY(102%);
+  transition:transform .16s linear; max-height:88%; overflow-y:auto; padding:14px 14px calc(20px + env(safe-area-inset-bottom))}
+.sheet.open{transform:translateY(0)}
+.sheet h3{margin:0 0 4px; font-size:18px; text-transform:uppercase; letter-spacing:-.02em}
+.kv{display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:2px solid var(--ink); font-size:12.5px}
+.kv span:first-child{color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.06em}
+.note{font-size:11px; color:var(--muted); margin:10px 0 0}
+.toast{position:absolute; left:14px; right:14px; bottom:96px; background:var(--ink); color:var(--yellow); border:2px solid var(--yellow);
+  font-size:12.5px; padding:10px; text-align:center; opacity:0; pointer-events:none; transition:opacity .12s linear; z-index:6; text-transform:uppercase; letter-spacing:.04em}
+.toast.open{opacity:1}
+@media (prefers-reduced-motion: reduce){*{transition:none !important; animation:none !important}}
+@media (max-width:460px){body{padding:0; background:var(--paper)} .phone{border:0; box-shadow:none; max-width:none; min-height:100vh}}
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="b-home" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8"/><path d="M5 11v10h14V11"/></symbol>
+  <symbol id="b-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="b-box" viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></symbol>
+  <symbol id="b-task" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><path d="M7 12l4 4 6-8"/></symbol>
+  <symbol id="b-tick" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+  <symbol id="b-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+  <symbol id="b-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="b-scan" viewBox="0 0 24 24"><path d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4M3 12h18"/></symbol>
+  <symbol id="b-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+  <symbol id="b-in" viewBox="0 0 24 24"><path d="M12 20V4M5 11l7-7 7 7"/></symbol>
+  <symbol id="b-out" viewBox="0 0 24 24"><path d="M12 4v16M5 13l7 7 7-7"/></symbol>
+  <symbol id="b-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="b-cart" viewBox="0 0 24 24"><path d="M3 5h3l2 10h11l2-7H7"/><circle cx="9" cy="19" r="1.5"/><circle cx="18" cy="19" r="1.5"/></symbol>
+  <symbol id="b-repeat" viewBox="0 0 24 24"><path d="M4 9a5 5 0 0 1 5-5h9M20 15a5 5 0 0 1-5 5H6"/><path d="M15 1l3 3-3 3M9 17l-3 3 3 3"/></symbol>
+  <symbol id="b-pill" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8"/><path d="M12 8v8"/></symbol>
+</svg>
+
+<div class="phone">
+  <header>
+    <div class="masthead">
+      <div>
+        <h1>家庭仓管台账</h1>
+        <div class="sub">HomeOps Ledger / v0.1 MVP</div>
+      </div>
+      <div class="stamp" id="stamp">2026.09.21 周一</div>
+    </div>
+    <div class="strip">
+      <div><b id="kExp">02</b><span>临期</span></div>
+      <div><b id="kLow">01</b><span>缺货</span></div>
+      <div><b id="kTask">04</b><span>待办</span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="v-today" role="tabpanel" aria-labelledby="t-today">
+      <div class="bento">
+        <div class="tile accent">
+          <div class="k">最紧急 · 明早前</div>
+          <div class="v" id="tileWorst">黄瓜 ×2</div>
+          <div class="k" id="tileWorstSub">明天到期 · 建议吃掉</div>
+        </div>
+        <div class="tile dark">
+          <div class="k">库存健康度</div>
+          <div class="v" id="tileHealth">82<small>%</small></div>
+          <div class="bar"><i id="tileBar" style="width:18%"></i></div>
+        </div>
+        <div class="tile wide">
+          <div class="k">今日待办 <span id="tileTaskN">4</span> 项 · 点一下就算完成</div>
+          <div id="tileTasks" style="margin-top:6px"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2><span>临期处理队列</span><em id="expCount">—</em></h2>
+        <div id="listExp"></div>
+      </div>
+
+      <div class="panel">
+        <h2><span>缺货 / 补货建议</span><em id="lowCount">—</em></h2>
+        <div id="listLow"></div>
+      </div>
+
+      <div class="panel">
+        <h2><span>录入终端</span><em>P0 手动 / P1 语音·扫码</em></h2>
+        <div style="padding:12px">
+          <div class="btns">
+            <button class="btn" data-act="voice"><svg class="ic" aria-hidden="true"><use href="#b-mic"/></svg>说一句</button>
+            <button class="btn" data-act="scan"><svg class="ic" aria-hidden="true"><use href="#b-scan"/></svg>扫条码</button>
+            <button class="btn primary" data-act="manual"><svg class="ic" aria-hidden="true"><use href="#b-plus"/></svg>手动填</button>
+          </div>
+          <p class="note">识别错了当场改：任何 AI 录入都必须能在 2 秒内修正。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="v-cal" role="tabpanel" aria-labelledby="t-cal" hidden>
+      <div class="panel">
+        <h2><span id="calTitle">2026 年 09 月</span><em>四类事件</em></h2>
+        <table class="cal">
+          <thead><tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>
+          <tbody id="calBody"></tbody>
+        </table>
+        <div class="legend2">
+          <span><i class="sw bg-yellow"></i>临期处理</span>
+          <span><i class="sw bg-blue"></i>采购计划</span>
+          <span><i class="sw bg-violet"></i>家务待办</span>
+          <span><i class="sw bg-green"></i>用药/耗材</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h2><span id="dayTitle">当日明细</span><em id="dayCount">—</em></h2>
+        <div id="listDay"></div>
+      </div>
+    </section>
+
+    <section id="v-stock" role="tabpanel" aria-labelledby="t-stock" hidden>
+      <div class="search">
+        <svg class="ic" aria-hidden="true"><use href="#b-search"/></svg>
+        <input id="q" type="search" placeholder="搜名称 / 地点 / 分类" aria-label="搜索库存">
+      </div>
+      <div class="filters" id="locFilters" role="group" aria-label="地点筛选"></div>
+      <div class="panel">
+        <div class="tblhead"><span>物品 / 位置</span><span>数量</span><span>状态</span></div>
+        <div id="listItems"></div>
+      </div>
+      <p class="note" id="stockNote"></p>
+    </section>
+
+    <section id="v-task" role="tabpanel" aria-labelledby="t-task" hidden>
+      <div class="panel">
+        <h2><span>今天到期</span><em id="mToday">—</em></h2>
+        <div id="listToday"></div>
+      </div>
+      <div class="panel">
+        <h2><span>周期家务模板</span><em>自动生成实例</em></h2>
+        <div id="listChore"></div>
+      </div>
+      <div class="panel">
+        <h2><span>库存联动</span><em>库存归零自动生成</em></h2>
+        <div id="listLinked"></div>
+      </div>
+    </section>
+  </main>
+
+  <nav role="tablist" aria-label="主导航">
+    <button class="tab" id="t-today" role="tab" aria-selected="true" aria-controls="v-today" data-v="today">
+      <svg class="ic" aria-hidden="true"><use href="#b-home"/></svg>今日<span class="nbadge" id="nbToday"></span></button>
+    <button class="tab" id="t-cal" role="tab" aria-selected="false" aria-controls="v-cal" data-v="cal">
+      <svg class="ic" aria-hidden="true"><use href="#b-cal"/></svg>日历</button>
+    <button class="tab" id="t-stock" role="tab" aria-selected="false" aria-controls="v-stock" data-v="stock">
+      <svg class="ic" aria-hidden="true"><use href="#b-box"/></svg>库存</button>
+    <button class="tab" id="t-task" role="tab" aria-selected="false" aria-controls="v-task" data-v="task">
+      <svg class="ic" aria-hidden="true"><use href="#b-task"/></svg>待办<span class="nbadge" id="nbTask"></span></button>
+  </nav>
+
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+    <div id="sheetBody"></div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-atomic="true"></div>
+</div>
+
+<script>
+var TODAY = new Date(2026,8,21);
+var LOCS = ['冰箱','冷冻室','储物柜','药箱','阳台'];
+var ITEMS = [
+  { id:1,name:'黄瓜',loc:'冰箱',qty:2,unit:'根',cat:'蔬菜',thr:0,batches:[{no:'B-0915',exp:'2026-09-22',qty:2,price:3.6}] },
+  { id:2,name:'纯牛奶 1L',loc:'冰箱',qty:1,unit:'盒',cat:'乳品',thr:2,batches:[{no:'B-0918',exp:'2026-09-25',qty:1,price:12.9}] },
+  { id:3,name:'鸡蛋',loc:'冰箱',qty:8,unit:'个',cat:'蛋类',thr:6,batches:[{no:'B-0912',exp:'2026-10-05',qty:8,price:15.8}] },
+  { id:4,name:'速冻水饺',loc:'冷冻室',qty:2,unit:'袋',cat:'主食',thr:1,batches:[{no:'B-0830',exp:'2027-03-01',qty:2,price:19.9}] },
+  { id:5,name:'净水器滤芯',loc:'储物柜',qty:0,unit:'支',cat:'耗材',thr:1,batches:[] },
+  { id:6,name:'洗衣液',loc:'储物柜',qty:1,unit:'瓶',cat:'日化',thr:1,batches:[{no:'B-0510',exp:'2028-05-10',qty:1,price:39.0}] },
+  { id:7,name:'布洛芬',loc:'药箱',qty:12,unit:'片',cat:'药品',thr:6,batches:[{no:'B-0402',exp:'2026-10-12',qty:12,price:0}] },
+  { id:8,name:'大米 5kg',loc:'储物柜',qty:1,unit:'袋',cat:'主食',thr:1,batches:[{no:'B-0701',exp:'2027-01-01',qty:1,price:45.0}] },
+  { id:9,name:'酸奶',loc:'冰箱',qty:3,unit:'杯',cat:'乳品',thr:2,batches:[{no:'B-0919',exp:'2026-09-26',qty:3,price:9.9}] },
+  { id:10,name:'西红柿',loc:'冰箱',qty:4,unit:'个',cat:'蔬菜',thr:0,batches:[{no:'B-0917',exp:'2026-09-24',qty:4,price:5.2}] }
+];
+var TASKS = [
+  { id:'t1',title:'吃掉黄瓜',src:'临期处理',due:'2026-09-21',done:false,kind:'today' },
+  { id:'t2',title:'买纯牛奶 2 盒',src:'库存联动',due:'2026-09-21',done:false,kind:'today' },
+  { id:'t3',title:'换净水器滤芯',src:'库存联动',due:'2026-09-23',done:false,kind:'linked' },
+  { id:'t4',title:'买净水器滤芯 1 支',src:'库存联动',due:'2026-09-23',done:false,kind:'linked' },
+  { id:'t5',title:'清理冰箱过期区',src:'周期家务',due:'2026-09-27',done:false,kind:'chore',cycle:'每周日' },
+  { id:'t6',title:'检查药箱有效期',src:'周期家务',due:'2026-10-01',done:false,kind:'chore',cycle:'每月 1 日' },
+  { id:'t7',title:'洗晾床单',src:'周期家务',due:'2026-09-24',done:true,kind:'chore',cycle:'每两周' }
+];
+var EVENTS = [
+  { date:'2026-09-21',type:'expiry',title:'黄瓜 临期' },
+  { date:'2026-09-21',type:'buy',title:'牛奶 补货' },
+  { date:'2026-09-22',type:'expiry',title:'黄瓜 到期' },
+  { date:'2026-09-23',type:'buy',title:'滤芯 补货' },
+  { date:'2026-09-23',type:'chore',title:'换滤芯' },
+  { date:'2026-09-24',type:'expiry',title:'西红柿 到期' },
+  { date:'2026-09-26',type:'care',title:'酸奶 最后食用' },
+  { date:'2026-09-27',type:'chore',title:'清理冰箱' },
+  { date:'2026-10-01',type:'chore',title:'查药箱' },
+  { date:'2026-10-12',type:'care',title:'布洛芬 过期' }
+];
+var TC = { expiry:'bg-yellow', buy:'bg-blue', chore:'bg-violet', care:'bg-green' };
+
+function $(s,r){ return (r||document).querySelector(s); }
+function el(t,c,x){ var n=document.createElement(t); if(c)n.className=c; if(x!=null)n.textContent=x; return n; }
+function p2(n){ return String(n).padStart(2,'0'); }
+function iso(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
+function daysTo(s){ return Math.round((new Date(s+'T00:00:00') - new Date(iso(TODAY)+'T00:00:00'))/86400000); }
+function expText(s){ var n=daysTo(s); if(n<0)return '已过期'+(-n)+'天'; if(n===0)return '今天到期'; if(n===1)return '明天到期'; return n+'天后'; }
+function expCls(s){ var n=daysTo(s); return n<=1?'bg-red':(n<=7?'bg-yellow':'bg-green'); }
+function firstExp(i){ var e=null; i.batches.forEach(function(b){ if(!e||b.exp<e)e=b.exp; }); return e; }
+function ic(id){ return '<svg class="ic" aria-hidden="true"><use href="#'+id+'"/></svg>'; }
+var tt; function toast(m){ var t=$('#toast'); t.textContent=m; t.classList.add('open'); clearTimeout(tt); tt=setTimeout(function(){ t.classList.remove('open'); },1800); }
+
+function renderToday(){
+  var exp = ITEMS.filter(function(i){ return i.qty>0 && firstExp(i) && daysTo(firstExp(i))<=7; })
+                 .sort(function(a,b){ return firstExp(a)<firstExp(b)?-1:1; });
+  var low = ITEMS.filter(function(i){ return i.qty<=i.thr; });
+  var open = TASKS.filter(function(t){ return !t.done && t.due<=iso(TODAY); });
+  $('#kExp').textContent = p2(exp.length); $('#kLow').textContent = p2(low.length); $('#kTask').textContent = p2(open.length);
+  $('#nbToday').textContent = exp.length?String(exp.length):''; $('#nbTask').textContent = open.length?String(open.length):'';
+  $('#expCount').textContent = exp.length+' 项'; $('#lowCount').textContent = low.length+' 项';
+  $('#tileTaskN').textContent = open.length;
+  var worst = exp[0];
+  if(worst){ $('#tileWorst').textContent = worst.name+' ×'+worst.qty; $('#tileWorstSub').textContent = expText(firstExp(worst))+' · 建议吃掉'; }
+  else { $('#tileWorst').textContent='无临期'; $('#tileWorstSub').textContent='库存干净'; }
+  var total = ITEMS.length, bad = exp.length + low.length;
+  var health = Math.max(0, Math.round(100 - bad/Math.max(1,total)*100));
+  $('#tileHealth').innerHTML = health+'<small>%</small>';
+  $('#tileBar').style.width = (100-health)+'%';
+
+  var mini = $('#tileTasks'); mini.innerHTML='';
+  if(!open.length) mini.appendChild(el('div','note','今天没有到期事项。'));
+  open.slice(0,3).forEach(function(t){
+    var r=el('div','ck'); r.setAttribute('role','checkbox'); r.setAttribute('tabindex','0'); r.setAttribute('aria-checked', t.done?'true':'false');
+    r.innerHTML='<span class="box">'+ic('b-tick')+'</span><span class="g"><span class="n">'+t.title+'</span><span class="s">'+t.src+'</span></span>';
+    r.addEventListener('click', function(){ t.done=!t.done; renderAll(); toast(t.done?'DONE: '+t.title:'已恢复: '+t.title); });
+    mini.appendChild(r);
+  });
+
+  var le=$('#listExp'); le.innerHTML='';
+  if(!exp.length) le.appendChild(el('div','note','没有临期物品。'));
+  exp.forEach(function(i){
+    var b=el('button','li'); b.type='button';
+    b.innerHTML='<span class="g"><span class="n">'+i.name+'</span><span class="s">'+i.loc+' · '+i.qty+' '+i.unit+' · FEFO 第 1 顺位</span></span>'+
+      '<span class="badge2 '+expCls(firstExp(i))+'">'+expText(firstExp(i))+'</span>'+
+      '<span class="badge2 bg-green" data-role="done">处理</span>';
+    b.addEventListener('click', function(e){
+      if(e.target.dataset.role==='done'){ i.qty=Math.max(0,i.qty-1); renderAll(); toast('已处理 1 '+i.unit+': '+i.name); return; }
+      openItem(i);
+    });
+    le.appendChild(b);
+  });
+
+  var ll=$('#listLow'); ll.innerHTML='';
+  if(!low.length) ll.appendChild(el('div','note','库存充足。'));
+  low.forEach(function(i){
+    var b=el('button','li'); b.type='button';
+    b.innerHTML='<span class="g"><span class="n">'+i.name+'</span><span class="s">'+i.loc+' · 现有 '+i.qty+' / 阈值 '+i.thr+'</span></span>'+
+      '<span class="badge2 bg-red">缺</span><span class="badge2 bg-blue" data-role="cart">+清单</span>';
+    b.addEventListener('click', function(e){
+      if(e.target.dataset.role==='cart'){ toast('购物清单 +1: '+i.name); e.stopPropagation(); return; }
+      openItem(i);
+    });
+    ll.appendChild(b);
+  });
+}
+
+var sel = iso(TODAY);
+function renderCal(){
+  var y=TODAY.getFullYear(), m=TODAY.getMonth();
+  $('#calTitle').textContent = y+' 年 '+p2(m+1)+' 月';
+  var start=(new Date(y,m,1).getDay()+6)%7, days=new Date(y,m+1,0).getDate(), prev=new Date(y,m,0).getDate();
+  var tb=$('#calBody'); tb.innerHTML='';
+  var cells=[];
+  for(var i=start-1;i>=0;i--) cells.push({out:true,n:prev-i});
+  for(var d=1;d<=days;d++) cells.push({out:false,n:d,ds:y+'-'+p2(m+1)+'-'+p2(d)});
+  var tail=(7-((start+days)%7))%7; for(var t=1;t<=tail;t++) cells.push({out:true,n:t});
+  for(var r=0;r<cells.length/7;r++){
+    var tr=el('tr');
+    for(var c=0;c<7;c++){
+      var cell=cells[r*7+c]; var td=el('td', cell.out?'out':'');
+      if(cell.out){ td.appendChild(el('span','dnum',String(cell.n))); tr.appendChild(td); continue; }
+      var ds=cell.ds; var evs=EVENTS.filter(function(e){ return e.date===ds; });
+      var num=el('span','dnum',String(cell.n));
+      td.appendChild(num);
+      evs.slice(0,2).forEach(function(e){ var s=el('span','ev '+TC[e.type], e.title); td.appendChild(s); });
+      if(ds===iso(TODAY)) td.classList.add('today');
+      if(ds===sel) td.classList.add('sel');
+      td.tabIndex=0; td.setAttribute('role','button');
+      td.setAttribute('aria-label',(m+1)+'月'+cell.n+'日，'+evs.length+' 个事件');
+      td.addEventListener('click', function(ds2){ return function(){ sel=ds2; renderCal(); }; }(ds));
+      td.addEventListener('keydown', function(ds2){ return function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); sel=ds2; renderCal(); } }; }(ds));
+      tr.appendChild(td);
+    }
+    tb.appendChild(tr);
+  }
+  var dayEvs=EVENTS.filter(function(e){ return e.date===sel; });
+  $('#dayTitle').textContent = sel.slice(5).replace('-','/')+' 明细';
+  $('#dayCount').textContent = dayEvs.length+' 条';
+  var box=$('#listDay'); box.innerHTML='';
+  if(!dayEvs.length) box.appendChild(el('div','note','没有安排。'));
+  dayEvs.forEach(function(e){
+    var r=el('div','li');
+    r.innerHTML='<span class="g"><span class="n">'+e.title+'</span><span class="s">'+e.date+'</span></span><span class="badge2 '+TC[e.type]+'">'+e.type+'</span>';
+    box.appendChild(r);
+  });
+}
+
+var locF='全部', q='';
+function renderFilters(){
+  var box=$('#locFilters'); box.innerHTML='';
+  ['全部'].concat(LOCS).forEach(function(l){
+    var b=el('button','chip',l); b.type='button'; b.setAttribute('aria-pressed', locF===l?'true':'false');
+    b.addEventListener('click', function(){ locF=l; renderStock(); });
+    box.appendChild(b);
+  });
+}
+function renderStock(){
+  renderFilters();
+  var list=ITEMS.filter(function(i){ return (locF==='全部'||i.loc===locF) && (q===''||i.name.indexOf(q)>=0||i.loc.indexOf(q)>=0||i.cat.indexOf(q)>=0); })
+                .sort(function(a,b){ var ea=firstExp(a)||'9999', eb=firstExp(b)||'9999'; return ea<eb?-1:1; });
+  var box=$('#listItems'); box.innerHTML='';
+  if(!list.length) box.appendChild(el('div','note','无匹配。'));
+  list.forEach(function(i){
+    var e=firstExp(i);
+    var b=el('button','li'); b.type='button';
+    b.innerHTML='<span class="g"><span class="n">'+i.name+'</span><span class="s">'+i.loc+' · '+i.cat+' · '+i.batches.length+' 批次</span></span>'+
+      '<span class="qty">'+i.qty+'<small>'+i.unit+'</small></span>'+
+      '<span class="badge2 '+(i.qty<=i.thr?'bg-red':(e?expCls(e):'bg-green'))+'">'+(i.qty<=i.thr?'缺货':(e?expText(e):'无批次'))+'</span>';
+    b.style.display='grid'; b.style.gridTemplateColumns='1fr 78px 92px';
+    b.addEventListener('click', function(){ openItem(i); });
+    box.appendChild(b);
+  });
+  $('#stockNote').textContent = list.length+' 项 / 共 '+ITEMS.length+' 项 · 默认 FEFO 排序（先过期先出）。';
+}
+
+function taskRow(t){
+  var r=el('div','ck'); r.setAttribute('role','checkbox'); r.setAttribute('tabindex','0'); r.setAttribute('aria-checked', t.done?'true':'false');
+  r.innerHTML='<span class="box">'+ic('b-tick')+'</span><span class="g"><span class="n">'+t.title+'</span>'+
+    '<span class="s">'+t.src+' · 截止 '+t.due.slice(5).replace('-','/')+(t.cycle?' · '+t.cycle:'')+'</span></span>'+
+    '<span class="badge2 '+(t.src==='临期处理'?'bg-yellow':t.src==='库存联动'?'bg-blue':'bg-violet')+'">'+t.src+'</span>';
+  function tg(){ t.done=!t.done; renderAll(); toast(t.done?'DONE: '+t.title:'已恢复: '+t.title); }
+  r.addEventListener('click', tg);
+  r.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tg(); } });
+  return r;
+}
+function renderTasks(){
+  var groups=[['#listToday', TASKS.filter(function(t){return t.kind==='today';})],
+              ['#listChore', TASKS.filter(function(t){return t.kind==='chore';})],
+              ['#listLinked',TASKS.filter(function(t){return t.kind==='linked';})]];
+  $('#mToday').textContent = TASKS.filter(function(t){return t.kind==='today'&&!t.done;}).length+' 项未完成';
+  groups.forEach(function(g){
+    var box=$(g[0]); box.innerHTML='';
+    if(!g[1].length) box.appendChild(el('div','note','暂无。'));
+    g[1].forEach(function(t){ box.appendChild(taskRow(t)); });
+  });
+}
+
+function openSheet(nodes){
+  var s=$('#sheet'), b=$('#sheetBody'); b.innerHTML=''; nodes.forEach(function(n){ b.appendChild(n); });
+  s.hidden=false; requestAnimationFrame(function(){ s.classList.add('open'); $('#scrim').classList.add('open'); });
+  $('#scrim').addEventListener('click', closeSheet, { once:true });
+}
+function closeSheet(){ var s=$('#sheet'); s.classList.remove('open'); $('#scrim').classList.remove('open'); setTimeout(function(){ s.hidden=true; },160); }
+function openItem(i){
+  var w=el('div');
+  var h=el('h3',null,i.name); h.id='sheetTitle';
+  w.appendChild(h); w.appendChild(el('p','note', i.loc+' / '+i.cat+' / 现有 '+i.qty+' '+i.unit+' / 阈值 '+i.thr));
+  if(i.batches.length){
+    var p=el('div','panel'); p.style.marginTop='12px';
+    p.innerHTML='<h2><span>批次 · FEFO</span><em>'+i.batches.length+' 批</em></h2>';
+    i.batches.slice().sort(function(a,b){ return a.exp<b.exp?-1:1; }).forEach(function(b){
+      var kv=el('div','kv'); kv.style.padding='8px 10px';
+      kv.innerHTML='<span>'+b.no+' / 到期 '+b.exp+'</span><span>'+b.qty+' '+i.unit+'</span>';
+      p.appendChild(kv);
+    });
+    w.appendChild(p);
+  } else { w.appendChild(el('p','note','无批次：先入库才产生库存。')); }
+  var bs=el('div','btns'); bs.style.marginTop='14px';
+  var bi=el('button','btn'); bi.type='button'; bi.innerHTML=ic('b-in')+'<span>入库+1</span>';
+  var bo=el('button','btn'); bo.type='button'; bo.innerHTML=ic('b-out')+'<span>领用-1</span>';
+  var bc=el('button','btn dark'); bc.type='button'; bc.innerHTML=ic('b-x')+'<span>关闭</span>';
+  bi.addEventListener('click', function(){
+    if(i.batches.length) i.batches[0].qty+=1; else i.batches.push({no:'B-'+iso(TODAY).slice(2).replace(/-/g,''),exp:'2027-09-21',qty:1,price:0});
+    i.qty+=1; renderAll(); openItem(i); toast('入库 +1: '+i.name);
+  });
+  bo.addEventListener('click', function(){
+    if(i.qty<=0){ toast('库存为 0'); return; }
+    i.qty-=1; for(var k=0;k<i.batches.length;k++){ if(i.batches[k].qty>0){ i.batches[k].qty-=1; break; } }
+    renderAll(); openItem(i); toast('领用 -1: '+i.name);
+  });
+  bc.addEventListener('click', closeSheet);
+  bs.appendChild(bi); bs.appendChild(bo); bs.appendChild(bc);
+  w.appendChild(bs);
+  w.appendChild(el('p','note','真实实现：一次请求写 stock_transactions + 批次数量，带幂等键；库存归零自动生成「买 + 换」两条待办。'));
+  openSheet([w]);
+}
+function openQuickAdd(){
+  var w=el('div'); var h=el('h3',null,'快速录入'); h.id='sheetTitle';
+  w.appendChild(h); w.appendChild(el('p','note','手动兜底：名称必填，其余可后补。'));
+  var f=el('div','panel'); f.style.marginTop='12px';
+  f.innerHTML='<h2><span>新批次</span><em>写入 stock_batches</em></h2>'+
+   '<div class="kv" style="padding:8px 10px"><span>名称</span><span><input id="qaName" placeholder="酸奶" style="font:inherit;text-align:right;border:0;border-bottom:2px solid #0A0A0A;width:150px;background:transparent"></span></div>'+
+   '<div class="kv" style="padding:8px 10px"><span>数量</span><span><input id="qaQty" type="number" value="1" min="1" style="font:inherit;text-align:right;border:0;border-bottom:2px solid #0A0A0A;width:150px;background:transparent"></span></div>'+
+   '<div class="kv" style="padding:8px 10px"><span>地点</span><span><select id="qaLoc" style="font:inherit;border:2px solid #0A0A0A;background:#fff">'+LOCS.map(function(l){return '<option>'+l+'</option>';}).join('')+'</select></span></div>'+
+   '<div class="kv" style="padding:8px 10px"><span>到期日</span><span><input id="qaExp" type="date" value="2026-10-01" style="font:inherit;border:2px solid #0A0A0A;background:#fff"></span></div>';
+  w.appendChild(f);
+  var go=el('button','btn primary'); go.type='button'; go.innerHTML='<span>入库</span>'; go.style.width='100%'; go.style.marginTop='14px';
+  go.addEventListener('click', function(){
+    var n=($('#qaName')).value.trim(); if(!n){ toast('名称必填'); return; }
+    var qy=Number(($('#qaQty')).value)||1, ex=($('#qaExp')).value;
+    ITEMS.push({ id:Date.now(), name:n, loc:($('#qaLoc')).value, qty:qy, unit:'个', cat:'未分类', thr:0,
+      batches:[{no:'B-'+iso(TODAY).slice(2).replace(/-/g,''), exp:ex, qty:qy, price:0}] });
+    EVENTS.push({ date:ex, type:'expiry', title:n+' 到期' });
+    closeSheet(); renderAll(); toast('入库完成: '+n+' x'+qy);
+  });
+  w.appendChild(go);
+  var cc=el('button','btn'); cc.type='button'; cc.textContent='取消'; cc.style.width='100%'; cc.style.marginTop='10px'; cc.addEventListener('click', closeSheet);
+  w.appendChild(cc);
+  openSheet([w]);
+}
+
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    var v=tab.dataset.v;
+    document.querySelectorAll('.tab').forEach(function(t){ t.setAttribute('aria-selected', t===tab?'true':'false'); });
+    ['today','cal','stock','task'].forEach(function(k){ $('#v-'+k).hidden=(k!==v); });
+    $('#main').scrollTop=0;
+  });
+});
+document.querySelectorAll('[data-act]').forEach(function(b){
+  b.addEventListener('click', function(){ b.dataset.act==='manual' ? openQuickAdd() : toast(b.dataset.act==='voice'?'语音录入 P1 未接入':'扫码 P1 未接入：先用键盘输条码'); });
+});
+$('#q').addEventListener('input', function(e){ q=e.target.value.trim(); renderStock(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeSheet(); $('#stamp').textContent = '2026.09.21 周一'; });
+$('#stamp').textContent='2026.09.21 周一';
+
+function renderAll(){ renderToday(); renderCal(); renderStock(); renderTasks(); }
+renderAll();
+</script>
+</body>
+</html>

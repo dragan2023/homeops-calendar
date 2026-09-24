@@ -1,0 +1,110 @@
+{
+  "design_system": {
+    "project_name": "HomeOps",
+    "category": "Inventory & Stock Management",
+    "pattern": {
+      "name": "Feature-Rich Showcase",
+      "sections": "Hero (value prop) > Feature grid/cards (4-6) > Use cases or benefits > Social proof or logos > CTA",
+      "cta_placement": "Hero (sticky) + After features + Bottom",
+      "color_strategy": "Brand primary + card bg #FAFAFA. Feature icons accent. CTA contrasting.",
+      "conversion": "Clear feature hierarchy. One key message per card. Strong CTA repetition."
+    },
+    "style": {
+      "id": "minimalism-and-swiss-style",
+      "name": "Minimalism & Swiss Style",
+      "type": "General",
+      "effects": "Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type hierarchy, fast loading",
+      "keywords": "Clean, simple, spacious, functional, white space, high contrast, geometric, sans-serif, grid-based, essential",
+      "best_for": "Enterprise apps, dashboards, documentation sites, SaaS platforms, professional tools",
+      "performance": "cost:low|drivers:none",
+      "accessibility": "risk:low|requires:contrast-text-4.5,keyboard,visible-focus,reduced-motion",
+      "light_mode": "supported",
+      "dark_mode": "supported"
+    },
+    "colors": {
+      "primary": "#334155",
+      "on_primary": "#FFFFFF",
+      "secondary": "#475569",
+      "on_secondary": "#FFFFFF",
+      "accent": "#059669",
+      "on_accent": "#000000",
+      "background": "#F8FAFC",
+      "foreground": "#0F172A",
+      "card": "#FFFFFF",
+      "card_foreground": "#0F172A",
+      "muted": "#F2F3F4",
+      "muted_foreground": "#475569",
+      "border": "#E6E8EA",
+      "destructive": "#DC2626",
+      "on_destructive": "#FFFFFF",
+      "ring": "#334155",
+      "notes": "Industrial slate + stock green",
+      "cta": "#059669",
+      "text": "#0F172A",
+      "on_cta": "#000000"
+    },
+    "typography": {
+      "heading": "Plus Jakarta Sans",
+      "body": "Plus Jakarta Sans",
+      "mood": "neumorphism, soft ui, monochromatic, cool grey, minimal, physical, depth, ceramic, system font, utility",
+      "best_for": "Smart home controls, minimal tools, aesthetic dashboards, health monitors, brand showcase pages",
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;1,400",
+      "css_import": "@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');"
+    },
+    "key_effects": "Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type hierarchy, fast loading",
+    "anti_patterns": "Excessive decoration + Complex shadows + 3D effects",
+    "decision_rules": {
+      "if_ux_focused": [
+        "constraint:prioritize-clarity"
+      ],
+      "if_mobile": [
+        "constraint:optimize-touch-targets"
+      ]
+    },
+    "activated_rules": [],
+    "constraints": [],
+    "reasoning_default": false,
+    "source_identities": {
+      "product": "Inventory & Stock Management",
+      "reasoning": "Inventory & Stock Management",
+      "style": "minimalism-and-swiss-style",
+      "color": "Inventory & Stock Management",
+      "typography": "Neumorphism Mobile (Plus Jakarta Sans + System)",
+      "landing": "Feature-Rich Showcase"
+    },
+    "source_derivations": {
+      "color_mode": null
+    },
+    "severity": "HIGH",
+    "dials": {
+      "variance": 2,
+      "variance_label": "Centered / Minimal",
+      "motion": 3,
+      "motion_label": "Subtle",
+      "density": 5,
+      "density_label": "Standard"
+    },
+    "motion_snippet": {
+      "Category": "Scroll Reveal",
+      "Intensity Tier": "Subtle",
+      "Trigger": "scroll (viewport enter)",
+      "Duration": "300-400ms",
+      "Easing": "power1.out",
+      "GSAP Snippet": "gsap.from(el, { opacity: 0, y: 12, duration: 0.35, ease: 'power1.out', scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' } });",
+      "Framework Notes": "Requires the ScrollTrigger plugin registered once via gsap.registerPlugin(ScrollTrigger); Use matchMedia('(prefers-reduced-motion: reduce)') to skip non-essential motion and render the final state immediately",
+      "Do": "Keep the y offset small (8-16px) so it reads as a fade, not a slide",
+      "Don't": "Don't reveal below-the-fold content needed for SEO/crawlers as invisible-by-default without a no-JS fallback",
+      "Performance Notes": "toggleActions 'play none none reverse' avoids re-triggering on every scroll direction change"
+    },
+    "spacing_scale": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px",
+      "2xl": "48px",
+      "3xl": "64px"
+    }
+  },
+  "persistence": null
+}

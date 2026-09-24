@@ -1,0 +1,110 @@
+{
+  "design_system": {
+    "project_name": "HomeOps",
+    "category": "Calendar & Scheduling App",
+    "pattern": {
+      "name": "Product Demo + Features",
+      "sections": "Hero > Product video/mockup (center) > Feature breakdown per section > Comparison (optional) > CTA",
+      "cta_placement": "Video center + CTA right/bottom",
+      "color_strategy": "Video surround: Brand color overlay. Features: Icon color #0080FF. Text: Dark #222",
+      "conversion": "Use an interactive demo only when it explains value better than static media. Provide captions, transcript, visible play/pause controls, and a non-video fallback; do not autoplay under reduced motion. Pause media when offscreen or hidden and keep the final product state available as static content."
+    },
+    "style": {
+      "id": "flat-design",
+      "name": "Flat Design",
+      "type": "General",
+      "effects": "No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons",
+      "keywords": "2D, minimalist, bold colors, no shadows, clean lines, simple shapes, typography-focused, modern, icon-heavy",
+      "best_for": "Web apps, mobile apps, cross-platform, startup MVPs, user-friendly, SaaS, dashboards, corporate",
+      "performance": "cost:low|drivers:none",
+      "accessibility": "risk:low|requires:contrast-text-4.5,keyboard,visible-focus,reduced-motion",
+      "light_mode": "supported",
+      "dark_mode": "supported"
+    },
+    "colors": {
+      "primary": "#2563EB",
+      "on_primary": "#FFFFFF",
+      "secondary": "#3B82F6",
+      "on_secondary": "#000000",
+      "accent": "#059669",
+      "on_accent": "#000000",
+      "background": "#F8FAFC",
+      "foreground": "#0F172A",
+      "card": "#FFFFFF",
+      "card_foreground": "#0F172A",
+      "muted": "#F1F5FD",
+      "muted_foreground": "#475569",
+      "border": "#E4ECFC",
+      "destructive": "#DC2626",
+      "on_destructive": "#FFFFFF",
+      "ring": "#2563EB",
+      "notes": "Calendar blue + event green",
+      "cta": "#059669",
+      "text": "#0F172A",
+      "on_cta": "#000000"
+    },
+    "typography": {
+      "heading": "Lora",
+      "body": "Raleway",
+      "mood": "calm, wellness, health, relaxing, natural, organic",
+      "best_for": "Health apps, wellness, spa, meditation, yoga, organic brands",
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap",
+      "css_import": "@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap');"
+    },
+    "key_effects": "No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons",
+    "anti_patterns": "Complex shadows + 3D effects",
+    "decision_rules": {
+      "if_ux_focused": [
+        "constraint:prioritize-clarity"
+      ],
+      "if_mobile": [
+        "constraint:optimize-touch-targets"
+      ]
+    },
+    "activated_rules": [],
+    "constraints": [],
+    "reasoning_default": false,
+    "source_identities": {
+      "product": "Calendar & Scheduling App",
+      "reasoning": "Calendar & Scheduling App",
+      "style": "flat-design",
+      "color": "Calendar & Scheduling App",
+      "typography": "Wellness Calm",
+      "landing": "Product Demo + Features"
+    },
+    "source_derivations": {
+      "color_mode": null
+    },
+    "severity": "HIGH",
+    "dials": {
+      "variance": 5,
+      "variance_label": "Balanced / Modern",
+      "motion": 6,
+      "motion_label": "Standard",
+      "density": 4,
+      "density_label": "Standard"
+    },
+    "motion_snippet": {
+      "Category": "Stagger List",
+      "Intensity Tier": "Standard",
+      "Trigger": "load or scroll",
+      "Duration": "300-450ms",
+      "Easing": "back.out(1.4)",
+      "GSAP Snippet": "gsap.from('.grid-item', { opacity: 0, scale: 0.92, y: 16, duration: 0.4, stagger: { each: 0.06, from: 'start', grid: 'auto' }, ease: 'back.out(1.4)' });",
+      "Framework Notes": "grid: 'auto' lets GSAP infer rows/columns from a CSS grid layout for a natural wave stagger; Use matchMedia('(prefers-reduced-motion: reduce)') to skip non-essential motion and render the final state immediately",
+      "Do": "Combine with from: 'center' for a bento-grid layout to draw the eye inward first",
+      "Don't": "Don't use back.out on dense data tables; the overshoot reads as sloppy on informational UI",
+      "Performance Notes": "Group DOM writes; avoid interleaving layout reads (getBoundingClientRect) between staggered tweens"
+    },
+    "spacing_scale": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px",
+      "xl": "32px",
+      "2xl": "48px",
+      "3xl": "64px"
+    }
+  },
+  "persistence": null
+}

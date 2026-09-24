@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="swiss">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>方案 A · 极简系统风（瑞士极简令牌）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+html[data-theme="swiss"]{
+  --bg:#F1F3F5; --surface:#FFFFFF; --surface-2:#F7F8F9; --border:#E3E7EA; --border-w:1px; --border-strong:#C9D0D6;
+  --text:#0F172A; --text-2:#334155; --text-3:#5B6472; --on-primary:#FFFFFF;
+  --primary:#0F172A; --primary-soft:#EDEFF2; --accent:#047857; --accent-soft:#ECFDF5;
+  --warn:#B45309; --warn-soft:#FFFBEB; --danger:#B91C1C; --danger-soft:#FEF2F2;
+  --success:#047857; --success-soft:#ECFDF5;
+  --radius-card:10px; --radius-ctl:6px; --radius-pill:999px; --shadow-card:none; --shadow-ctl:none;
+  --font-head:'Plus Jakarta Sans',system-ui,sans-serif; --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --fs-h1:24px; --fs-h2:12px; --label-transform:uppercase; --label-tracking:.12em;
+  --gap:12px; --pad:16px; --ctl-h:44px; --dur:.18s; --scrim:rgba(8,12,20,.45);
+  --shadow-sheet: 0 -16px 40px -24px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;background:#E9ECEF;font-family:var(--font-body);color:var(--text);padding:28px 20px 60px}
+.page-head{max-width:1400px;margin:0 auto 22px}
+.page-head h1{font-size:20px;margin:0 0 6px}
+.page-head p{margin:0;color:var(--text-3);font-size:13px;line-height:1.6}
+.row{max-width:1400px;margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.col{flex:0 0 auto}
+.cap{font-size:12.5px;color:var(--text-2);margin:0 0 8px;max-width:340px;line-height:1.55}
+.cap b{color:var(--text)}
+.phone{width:340px;background:var(--bg);border:var(--border-w) solid var(--border-strong);border-radius:22px;overflow:hidden;position:relative;box-shadow:0 18px 34px -26px rgba(15,23,42,.45)}
+.status{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);padding:8px 14px 4px}
+.appbar{display:flex;justify-content:space-between;align-items:baseline;padding:6px 14px 4px}
+.appbar h2{font-size:20px;font-weight:700;margin:0}
+.appbar span{font-size:11px;color:var(--text-3)}
+.body{padding:10px 14px 18px}
+.card{background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-card);padding:12px}
+.tiny{font-size:11px;color:var(--text-3);letter-spacing:var(--label-tracking);text-transform:var(--label-transform);font-weight:600}
+.field{margin-top:12px}
+.lab{font-size:12px;color:var(--text-3);margin-bottom:6px}
+.input{min-height:var(--ctl-h);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 12px;background:var(--surface-2);border:var(--border-w) solid var(--border);border-radius:var(--radius-ctl);font-size:14px}
+.input .hint{font-size:11.5px;color:var(--text-3)}
+.pick{background:var(--surface);border:var(--border-w) solid var(--border);border-radius:var(--radius-ctl);min-height:var(--ctl-h);display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:14px}
+.pick.on{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary) inset}
+.btn{min-height:var(--ctl-h);display:flex;align-items:center;justify-content:center;border-radius:var(--radius-ctl);border:var(--border-w) solid var(--border);background:var(--surface);font-size:13.5px;font-weight:600}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-top-left-radius:var(--radius-card);border-top-right-radius:var(--radius-card);box-shadow:var(--shadow-sheet);padding:12px 14px 16px}
+.grip{width:44px;height:4px;border-radius:4px;background:var(--border-strong);margin:0 auto 10px}
+.sheet h3{margin:0 0 10px;font-size:17px}
+.search{min-height:38px;display:flex;align-items:center;padding:0 12px;border:var(--border-w) solid var(--border);border-radius:var(--radius-ctl);background:var(--surface-2);color:var(--text-3);font-size:13px}
+.opt{display:flex;align-items:center;gap:10px;min-height:46px;border-bottom:var(--border-w) solid var(--border);font-size:14px}
+.opt:last-child{border-bottom:0}
+.opt .name{flex:1}
+.opt .cnt{font-size:11.5px;color:var(--text-3)}
+.opt .tick{color:var(--accent);font-weight:700}
+.opt.child{padding-left:22px;color:var(--text-2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.chip{border:var(--border-w) solid var(--border);border-radius:var(--radius-pill);padding:5px 11px;font-size:12px;background:var(--surface-2)}
+.chip.on{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.notes{margin-top:14px;border-top:var(--border-w) dashed var(--border);padding-top:10px}
+.notes li{font-size:12px;color:var(--text-3);line-height:1.6;margin-bottom:2px}
+.dlg{position:absolute;left:20px;right:20px;top:120px;background:var(--surface);border-radius:12px;padding:16px;box-shadow:0 22px 40px -24px rgba(0,0,0,.6)}
+.dlg h4{margin:0 0 4px;font-size:16px}
+.dlg .sub{font-size:12px;color:var(--text-3);margin-bottom:10px}
+.dlg .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.dlg .acts span{font-size:13px;font-weight:600;color:var(--accent);padding:6px 8px}
+table.cal{width:100%;border-collapse:collapse;font-size:12.5px;text-align:center}
+table.cal th{font-weight:600;color:var(--text-3);font-size:11px;padding:4px 0;letter-spacing:.06em}
+table.cal td{padding:5px 0;color:var(--text-2)}
+table.cal td.sel{background:var(--primary);color:var(--on-primary);border-radius:6px;font-weight:700}
+table.cal td.today{box-shadow:0 0 0 1px var(--accent) inset;border-radius:6px;color:var(--accent);font-weight:700}
+table.cal td.dim{color:var(--border-strong)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.selbar{position:absolute;left:12px;right:12px;bottom:12px;background:var(--primary);color:var(--on-primary);border-radius:var(--radius-ctl);min-height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:13.5px;font-weight:600}
+.ck{width:20px;height:20px;border:1.5px solid var(--border-strong);border-radius:6px;flex:0 0 auto}
+.ck.on{background:var(--accent);border-color:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px}
+</style>
+</head>
+<body>
+<div class="page-head">
+  <h1>方案 A · 极简系统风（默认主题「瑞士极简」的令牌）</h1>
+  <p>三个交互都改「点开选」，不做循环切换。日期用<b>手机系统原生日历弹窗</b>（Expo Go 已内置该原生模块，观感跟随手机系统，不随 App 主题变）。容器管理做成设置式列表，删除=停用（二次确认）。</p>
+</div>
+
+<div class="row">
+  <div class="col">
+    <p class="cap"><b>① 放哪儿 → 底部弹层选择</b><br>点整行打开容器列表：分组层级缩进、每个容器显示里面有几样；顶部搜索，底部「新建容器」就地创建。</p>
+    <div class="phone">
+      <div class="status"><span>09:31</span><span>5G · 77%</span></div>
+      <div class="appbar"><h2>随手记一笔</h2><span>瑞士极简</span></div>
+      <div class="body">
+        <div class="field"><div class="lab">名称（不存在会自动建物品）</div><div class="input">细云龙</div></div>
+        <div class="field"><div class="lab">数量</div><div class="input">1</div></div>
+        <div class="field"><div class="lab">放哪儿</div><div class="pick on">储物柜<span class="hint">点击选择 ▾</span></div></div>
+        <div class="field"><div class="lab">到期日</div><div class="pick">2026-10-07<span class="hint">还有 13 天</span></div></div>
+        <div class="btn primary" style="margin-top:16px">入库</div>
+      </div>
+      <div class="scrim"></div>
+      <div class="sheet">
+        <div class="grip"></div>
+        <h3>放到哪里</h3>
+        <div class="search">搜索容器…</div>
+        <div class="chips"><span class="chip on">储物柜</span><span class="chip">冰箱</span><span class="chip">药箱</span></div>
+        <div class="opt"><span class="name">冰箱</span><span class="cnt">12 样</span></div>
+        <div class="opt child"><span class="name">冷冻室</span><span class="cnt">3 样</span></div>
+        <div class="opt child"><span class="name">冷藏室</span><span class="cnt">9 样</span></div>
+        <div class="opt"><span class="name">储物柜</span><span class="cnt">8 样</span><span class="tick">✓</span></div>
+        <div class="opt"><span class="name">阳台</span><span class="cnt">2 样</span></div>
+        <div class="opt"><span class="name">药箱</span><span class="cnt">5 样</span></div>
+        <div class="btn" style="margin-top:12px">＋ 新建容器</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <p class="cap"><b>② 到期日 → 系统原生日历弹窗</b><br>点整行调起手机自带的日期选择器（Android 是 Material 弹窗）。优点：零学习成本、无障碍支持最好；代价：观感不跟 App 的 8 套主题走。</p>
+    <div class="phone">
+      <div class="status"><span>09:31</span><span>5G · 77%</span></div>
+      <div class="appbar"><h2>随手记一笔</h2><span>瑞士极简</span></div>
+      <div class="body">
+        <div class="field"><div class="lab">名称（不存在会自动建物品）</div><div class="input">细云龙</div></div>
+        <div class="field"><div class="lab">数量</div><div class="input">1</div></div>
+        <div class="field"><div class="lab">放哪儿</div><div class="pick">储物柜<span class="hint">点击选择 ▾</span></div></div>
+        <div class="field"><div class="lab">到期日</div><div class="pick on">2026-10-07<span class="hint">点击选择 ▾</span></div></div>
+        <div class="btn primary" style="margin-top:16px">入库</div>
+      </div>
+      <div class="scrim"></div>
+      <div class="dlg">
+        <h4>选择日期</h4>
+        <div class="sub">2026 年 10 月</div>
+        <table class="cal">
+          <tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr>
+          <tr><td class="dim">28</td><td class="dim">29</td><td class="dim">30</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+          <tr><td>5</td><td>6</td><td class="sel">7</td><td>8</td><td>9</td><td>10</td><td>11</td></tr>
+          <tr><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td></tr>
+          <tr><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td></tr>
+          <tr><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td class="dim">1</td></tr>
+        </table>
+        <div class="acts"><span>取消</span><span>确定</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <p class="cap"><b>③ 库存 · 容器管理 + 批量移动</b><br>库存页新增「容器」入口：新建 / 重命名 / 停用（二次确认）；列表页勾选多件物品后底部出现「移动到…」。</p>
+    <div class="phone">
+      <div class="status"><span>09:31</span><span>5G · 77%</span></div>
+      <div class="appbar"><h2>存储容器</h2><span>5 个在用</span></div>
+      <div class="body">
+        <div class="toolbar"><span class="tiny">容器 · 物品数</span><span class="btn" style="min-height:34px;padding:0 12px">＋ 新建容器</span></div>
+        <div class="card" style="padding:0">
+          <div class="opt" style="padding:0 12px"><span class="name">冰箱</span><span class="cnt">12 样 · 34 件</span><span class="hint">⋯</span></div>
+          <div class="opt child" style="padding-left:22px"><span class="name">冷冻室</span><span class="cnt">3 样 · 9 件</span></div>
+          <div class="opt" style="padding:0 12px"><span class="name">储物柜</span><span class="cnt">8 样 · 21 件</span><span class="hint">⋯</span></div>
+          <div class="opt" style="padding:0 12px"><span class="name">阳台</span><span class="cnt">2 样 · 4 件</span><span class="hint">⋯</span></div>
+          <div class="opt" style="padding:0 12px"><span class="name">药箱</span><span class="cnt">5 样 · 16 件</span><span class="hint">⋯</span></div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="tiny">储物柜 · 操作</div>
+          <div class="opt"><span class="name">重命名</span></div>
+          <div class="opt"><span class="name">批量移动里面的物品…</span></div>
+          <div class="opt"><span class="name" style="color:var(--danger)">停用这个容器</span><span class="cnt">历史记录保留</span></div>
+        </div>
+        <div class="card" style="margin-top:12px;padding:0">
+          <div class="opt" style="padding:0 12px"><span class="ck on">✓</span><span class="name">细云龙</span><span class="cnt">1 件</span></div>
+          <div class="opt" style="padding:0 12px"><span class="ck on">✓</span><span class="name">酸奶</span><span class="cnt">2 件</span></div>
+          <div class="opt" style="padding:0 12px"><span class="ck"></span><span class="name">牛奶</span><span class="cnt">3 件</span></div>
+        </div>
+      </div>
+      <div class="selbar"><span>已选 2 件</span><span>移动到… ▸</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="notes" style="max-width:1400px;margin:26px auto 0;background:#fff;border:1px solid #E3E7EA;border-radius:10px;padding:14px 18px">
+  <div class="tiny" style="margin-bottom:6px">这一版的样子</div>
+  <ul style="margin:0;padding-left:18px">
+    <li>视觉完全用 App 现有令牌（瑞士极简），不新增设计语言；换主题自动跟着变。</li>
+    <li>选择器一律「点整行 → 弹层」，取消原来的「点一下循环切换」。</li>
+    <li>容器是层级结构（冰箱 → 冷冻室），列表里用缩进表达，和数据库里的父子关系一致。</li>
+    <li>删除容器 = 停用：不再出现在选择列表，历史入库/流水照旧可查。</li>
+  </ul>
+</div>
+</body>
+</html>

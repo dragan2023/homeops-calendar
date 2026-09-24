@@ -1,0 +1,19 @@
+node_modules/
+data/*.db
+data/*.db-wal
+data/*.db-shm
+.env
+.env.local
+dist/
+*.log
+design/_raw/*.extract.js
+
+# --- 上传公共仓时额外排除（2026-09 用户确认：第三方副本与本机归档不上传） ---
+reference/
+_archive/
+# Expo / 构建本地产物
+.expo/
+mobile/.expo/
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,201 @@
+/* 家庭仓管日历 · 主题令牌单一真相源（每套主题必须填满这里的全部令牌）
+   改完跑：node scripts/sync-theme-tokens.mjs && node design/_raw/check-theme-contrast.mjs */
+:root{
+  /* —— 令牌契约（每套主题都必须定义；下面这份是 swiss 默认值兜底） —— */
+  --bg:#F1F3F5; --bg-deco:none; --surface:#FFFFFF; --surface-2:#F7F8F9;
+  --border:#E3E7EA; --border-w:1px; --border-strong:#C9D0D6;
+  --text:#0F172A; --text-2:#334155; --text-3:#5B6472; --on-primary:#FFFFFF;
+  --primary:#0F172A; --primary-soft:#EDEFF2; --accent:#047857; --accent-soft:#ECFDF5;
+  --warn:#B45309; --warn-soft:#FFFBEB; --danger:#B91C1C; --danger-soft:#FEF2F2;
+  --success:#047857; --success-soft:#ECFDF5; --info:#1D4ED8; --info-soft:#EFF6FF;
+  --radius-card:12px; --radius-ctl:8px; --radius-pill:999px;
+  --shadow-card:none; --shadow-ctl:none; --shadow-press:none; --glow:none;
+  --font-head:'Plus Jakarta Sans',system-ui,sans-serif; --font-body:'Plus Jakarta Sans',system-ui,sans-serif; --font-mono:ui-monospace,monospace;
+  --fs-h1:24px; --fs-h2:12px; --label-transform:uppercase; --label-tracking:.12em;
+  --gap:12px; --pad:16px; --ctl-h:44px; --dur:.18s; --ease:ease;
+  --icon-stroke:1.75; --icon-cap:round; --clip-card:none; --nav-bg:rgba(255,255,255,.96);
+  color-scheme:light;
+  --scrim: rgba(8,12,20,.45); --swatch-border: rgba(0,0,0,.18); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -16px 40px -24px rgba(0,0,0,.6);
+  --nav-fg: #5B6472; --nav-fg-active: #0F172A;
+}
+/* —— 主题 1：瑞士极简 —— */
+html[data-theme="swiss"]{
+  --bg:#F1F3F5; --surface:#FFFFFF; --surface-2:#F7F8F9; --border:#E3E7EA; --border-w:1px; --border-strong:#C9D0D6;
+  --text:#0F172A; --text-2:#334155; --text-3:#5B6472; --on-primary:#FFFFFF;
+  --primary:#0F172A; --primary-soft:#EDEFF2; --accent:#047857; --accent-soft:#ECFDF5;
+  --warn:#B45309; --warn-soft:#FFFBEB; --danger:#B91C1C; --danger-soft:#FEF2F2;
+  --success:#047857; --success-soft:#ECFDF5; --info:#1D4ED8; --info-soft:#EFF6FF;
+  --radius-card:10px; --radius-ctl:6px; --radius-pill:999px;
+  --shadow-card:none; --shadow-ctl:none; --shadow-press:none;
+  --font-head:'Plus Jakarta Sans',system-ui,sans-serif; --font-body:'Plus Jakarta Sans',system-ui,sans-serif; --font-mono:ui-monospace,monospace;
+  --fs-h1:24px; --fs-h2:12px; --label-transform:uppercase; --label-tracking:.12em;
+  --gap:12px; --pad:16px; --ctl-h:44px; --dur:.18s; --ease:ease;
+  --icon-stroke:1.75; --icon-cap:round;
+  --scrim: rgba(8,12,20,.45); --swatch-border: rgba(0,0,0,.18); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -16px 40px -24px rgba(0,0,0,.6);
+  --bg-deco: none;
+  --glow: none;
+  --clip-card: none;
+  --nav-bg: rgba(255,255,255,.96);
+  --nav-fg: #5B6472; --nav-fg-active: #0F172A;
+}
+/* —— 主题 2：新粗野 —— */
+html[data-theme="brutal"]{
+  --bg:#F4F1EA; --surface:#FFFFFF; --surface-2:#EFEBE0; --border:#0A0A0A; --border-w:3px; --border-strong:#0A0A0A;
+  --text:#0A0A0A; --text-2:#2B2B2B; --text-3:#4A4A4A; --on-primary:#0A0A0A;
+  --primary:#FFE94A; --primary-soft:#FFF7C2; --accent:#285CDB; --accent-soft:#E4EBFF;
+  --warn:#B45309; --warn-soft:#FFF7C2; --danger:#B32922; --danger-soft:#FFD9D6;
+  --success:#00764B; --success-soft:#D6F5E7; --info:#285CDB; --info-soft:#E4EBFF;
+  --radius-card:0px; --radius-ctl:0px; --radius-pill:0px;
+  --shadow-card:6px 6px 0 #0A0A0A; --shadow-ctl:4px 4px 0 #0A0A0A; --shadow-press:2px 2px 0 #0A0A0A;
+  --font-head:'Space Mono',monospace; --font-body:'Space Mono',monospace; --font-mono:'Space Mono',monospace;
+  --fs-h1:22px; --label-tracking:.14em; --gap:14px; --pad:14px; --ctl-h:48px; --dur:.1s; --ease:linear;
+  --icon-stroke:2.25; --icon-cap:square; --nav-bg:#0A0A0A;
+  --scrim: rgba(10,10,10,.5); --swatch-border: rgba(0,0,0,.3); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -8px 0 0 #0A0A0A;
+  --bg-deco: none;
+  --glow: none;
+  --fs-h2: 12px;
+  --label-transform: uppercase;
+  --clip-card: none;
+  --nav-fg: #C9C9C9; --nav-fg-active: #FFE94A;
+}
+/* —— 主题 3：柔和黏土 —— */
+html[data-theme="clay"]{
+  --bg:#F6EFE6; --surface:#FFFDF9; --surface-2:#FBF5EC; --border:#EFE3D4; --border-w:3px; --border-strong:#D9C9B6;
+  --text:#2F2A26; --text-2:#4A423B; --text-3:#6E645C; --on-primary:#FFFFFF;
+  --primary:#15803D; --primary-soft:#D8F0DF; --accent:#6252BB; --accent-soft:#E6E6FA;
+  --warn:#A94E08; --warn-soft:#FDF0D5; --danger:#B91C1C; --danger-soft:#FBE3E1;
+  --success:#137337; --success-soft:#D8F0DF; --info:#1D4ED8; --info-soft:#DCEAFB;
+  --radius-card:26px; --radius-ctl:20px; --radius-pill:999px;
+  --shadow-card:inset 0 -3px 0 #D9C9B6, inset 0 2px 0 #fff, 0 10px 22px -14px rgba(47,42,38,.55);
+  --shadow-ctl:inset 0 -3px 0 #D9C9B6, inset 0 2px 0 #fff, 0 8px 18px -12px rgba(47,42,38,.5);
+  --shadow-press:inset 0 -1px 0 #D9C9B6, 0 2px 6px -4px rgba(47,42,38,.5);
+  --font-head:'Lora',Georgia,serif; --font-body:'Raleway',system-ui,sans-serif;
+  --fs-h1:21px; --label-transform:none; --label-tracking:.04em; --gap:12px; --pad:18px; --ctl-h:48px;
+  --dur:.22s; --ease:cubic-bezier(.34,1.56,.64,1); --icon-stroke:1.8; --icon-cap:round;
+  --scrim: rgba(47,42,38,.42); --swatch-border: rgba(0,0,0,.14); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -14px 34px -20px rgba(47,42,38,.7);
+  --bg-deco: none;
+  --glow: none;
+  --font-mono: ui-monospace,monospace;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-bg: rgba(255,253,249,.97);
+  --nav-fg: #6E645C; --nav-fg-active: #15803D;
+}
+/* —— 主题 4：卡通粉（少女/可爱） —— */
+html[data-theme="kawaii"]{
+  --bg:#FFF1F6; --bg-deco:radial-gradient(#FFD6E7 1.6px, transparent 1.7px); --surface:#FFFFFF; --surface-2:#FFF7FA;
+  --border:#FFD1E3; --border-w:3px; --border-strong:#FFAFD0;
+  --text:#5B2340; --text-2:#7A3856; --text-3:#9A5F7B; --on-primary:#5B2340;
+  --primary:#FF6FA5; --primary-soft:#FFE3EF; --accent:#724BCA; --accent-soft:#EFE7FF;
+  --warn:#BA3E0C; --warn-soft:#FFEEDD; --danger:#C2193E; --danger-soft:#FFE1E8;
+  --success:#0B7954; --success-soft:#DCFCE7; --info:#7C3AED; --info-soft:#EFE7FF;
+  --radius-card:28px; --radius-ctl:22px; --radius-pill:999px;
+  --shadow-card:0 6px 0 #FFD1E3, 0 14px 26px -18px rgba(255,111,165,.9);
+  --shadow-ctl:0 4px 0 #FFD1E3;
+  --shadow-press:0 1px 0 #FFD1E3;
+  --font-head:'Fredoka','Nunito',sans-serif; --font-body:'Nunito',system-ui,sans-serif;
+  --fs-h1:23px; --label-transform:none; --label-tracking:.02em; --gap:12px; --pad:16px; --ctl-h:48px;
+  --dur:.24s; --ease:cubic-bezier(.34,1.56,.64,1); --icon-stroke:2.4; --icon-cap:round; --nav-bg:rgba(255,255,255,.98);
+  --scrim: rgba(91,35,64,.42); --swatch-border: rgba(0,0,0,.16); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -10px 30px -18px rgba(255,111,165,.8);
+  --glow: none;
+  --font-mono: ui-monospace,monospace;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-fg: #9A5F7B; --nav-fg-active: #C2193E;
+}
+/* —— 主题 5：机甲 HUD（科技/男生） —— */
+html[data-theme="mecha"]{
+  --bg:#070B12; --bg-deco:repeating-linear-gradient(0deg, rgba(0,229,255,.06) 0 1px, transparent 1px 4px);
+  --surface:#0E1620; --surface-2:#121C28; --border:#1F3A4D; --border-w:1px; --border-strong:#00E5FF;
+  --text:#DCEBF5; --text-2:#9FC0D4; --text-3:#6E8FA6; --on-primary:#04121A;
+  --primary:#00E5FF; --primary-soft:#0B2A33; --accent:#FFB020; --accent-soft:#2A1F06;
+  --warn:#FFB020; --warn-soft:#2A1F06; --danger:#FF4D4D; --danger-soft:#2A0E10;
+  --success:#22E08A; --success-soft:#082A1E; --info:#4DA3FF; --info-soft:#0A2136;
+  --radius-card:2px; --radius-ctl:2px; --radius-pill:2px;
+  --shadow-card:0 0 0 1px rgba(0,229,255,.25), 0 0 24px -12px rgba(0,229,255,.8);
+  --shadow-ctl:0 0 0 1px rgba(0,229,255,.35);
+  --shadow-press:0 0 12px -4px rgba(0,229,255,.8) inset; --glow:0 0 8px rgba(0,229,255,.55);
+  --font-head:'Orbitron','Exo 2',sans-serif; --font-body:'Exo 2',system-ui,sans-serif; --font-mono:'Share Tech Mono',monospace;
+  --fs-h1:20px; --label-tracking:.2em; --gap:10px; --pad:14px; --ctl-h:48px; --dur:.12s; --ease:cubic-bezier(.2,.9,.1,1);
+  --icon-stroke:1.6; --icon-cap:square; --clip-card:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+  --nav-bg:rgba(14,22,32,.98); color-scheme:dark;
+  --scrim: rgba(0,0,0,.62); --swatch-border: rgba(255,255,255,.28); --badge-text: #140000;
+  --shadow-sheet: 0 -16px 40px -22px rgba(0,229,255,.45);
+  --fs-h2: 12px;
+  --label-transform: uppercase;
+  --nav-fg: #9FC0D4; --nav-fg-active: #00E5FF;
+}
+/* —— 主题 6：暗夜护眼（深色暖琥珀） —— */
+html[data-theme="midnight"]{
+  --bg:#0F172A; --surface:#192134; --surface-2:#1F2942; --border:rgba(255,255,255,.10); --border-w:1px; --border-strong:rgba(255,255,255,.22);
+  --text:#EDF1F7; --text-2:#C3CDDE; --text-3:#94A3B8; --on-primary:#0F172A;
+  --primary:#F0B44A; --primary-soft:#2C2415; --accent:#8E80F6; --accent-soft:#231F45;
+  --warn:#F0B44A; --warn-soft:#2C2415; --danger:#F87171; --danger-soft:#33191C;
+  --success:#4ADE80; --success-soft:#122C22; --info:#7DA9FF; --info-soft:#16233D;
+  --radius-card:16px; --radius-ctl:12px; --radius-pill:999px;
+  --shadow-card:0 10px 24px -18px rgba(0,0,0,.9); --shadow-ctl:0 6px 14px -10px rgba(0,0,0,.9);
+  --font-head:'Fira Sans',system-ui,sans-serif; --font-body:'Fira Sans',system-ui,sans-serif; --font-mono:'Fira Code',monospace;
+  --fs-h1:21px; --label-transform:none; --label-tracking:.04em; --gap:12px; --pad:16px; --ctl-h:46px;
+  --icon-stroke:1.9; --icon-cap:round; --dur:.2s; --ease:ease; --nav-bg:rgba(25,33,52,.97); color-scheme:dark;
+  --scrim: rgba(0,0,0,.6); --swatch-border: rgba(255,255,255,.22); --badge-text: #2A0B0B;
+  --shadow-sheet: 0 -16px 40px -22px rgba(0,0,0,.9);
+  --bg-deco: none;
+  --shadow-press: 0 4px 10px -6px rgba(0,0,0,.9);
+  --glow: none;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-fg: #94A3B8; --nav-fg-active: #F0B44A;
+}
+/* —— 主题 7：孟菲斯 80s（多彩几何，潮流） —— */
+html[data-theme="memphis"]{
+  --bg:#FFFDF6; --bg-deco:conic-gradient(from 45deg at 12% 8%, #FF71CE22 0 25%, transparent 0 100%),
+    conic-gradient(from 200deg at 88% 92%, #86CCCA33 0 25%, transparent 0 100%);
+  --surface:#FFFFFF; --surface-2:#FFF6E8; --border:#111111; --border-w:3px; --border-strong:#111111;
+  --text:#111111; --text-2:#333333; --text-3:#5A5A5A; --on-primary:#111111;
+  --primary:#FFCE5C; --primary-soft:#FFF1CC; --accent:#99447C; --accent-soft:#FFE1F5;
+  --warn:#9C5604; --warn-soft:#FFF1CC; --danger:#AD3838; --danger-soft:#FFE0E0;
+  --success:#0B7954; --success-soft:#DCFCE7; --info:#556290; --info-soft:#E7EBF7;
+  --radius-card:4px; --radius-ctl:4px; --radius-pill:999px;
+  --shadow-card:8px 8px 0 #111111; --shadow-ctl:5px 5px 0 #111111; --shadow-press:2px 2px 0 #111111;
+  --font-head:'Inter',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif; --font-mono:'JetBrains Mono',monospace;
+  --fs-h1:22px; --label-tracking:.1em; --gap:12px; --pad:16px; --ctl-h:46px; --dur:.14s; --ease:cubic-bezier(.2,.9,.1,1);
+  --icon-stroke:2.1; --icon-cap:round;
+  --scrim: rgba(17,17,17,.5); --swatch-border: rgba(0,0,0,.25); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -10px 0 0 #111111;
+  --glow: none;
+  --fs-h2: 12px;
+  --label-transform: uppercase;
+  --clip-card: none;
+  --nav-bg: rgba(255,253,246,.98);
+  --nav-fg: #5A5A5A; --nav-fg-active: #111111;
+}
+/* —— 主题 8：极光玻璃（浅色通透） —— */
+html[data-theme="glass"]{
+  --bg:#EAF2FF; --bg-deco:radial-gradient(60% 40% at 15% 10%, #A5D8FF 0%, transparent 60%),
+    radial-gradient(50% 40% at 85% 20%, #FFC9DE 0%, transparent 60%),
+    radial-gradient(60% 50% at 50% 95%, #B9F5D8 0%, transparent 65%);
+  --surface:rgba(255,255,255,.62); --surface-2:rgba(255,255,255,.42);
+  --border:rgba(255,255,255,.75); --border-w:1px; --border-strong:rgba(255,255,255,.95);
+  --text:#0B1B33; --text-2:#33506E; --text-3:#57708D; --on-primary:#FFFFFF;
+  --primary:#1D4ED8; --primary-soft:rgba(29,78,216,.14); --accent:#0A6C4B; --accent-soft:rgba(14,159,110,.16);
+  --warn:#9E4908; --warn-soft:rgba(245,158,11,.18); --danger:#B91C1C; --danger-soft:rgba(220,38,38,.14);
+  --success:#0A6C4B; --success-soft:rgba(14,159,110,.16); --info:#1D4ED8; --info-soft:rgba(29,78,216,.14);
+  --radius-card:20px; --radius-ctl:14px; --radius-pill:999px;
+  --shadow-card:0 12px 30px -20px rgba(11,27,51,.55), inset 0 1px 0 rgba(255,255,255,.9);
+  --shadow-ctl:0 8px 18px -12px rgba(11,27,51,.5);
+  --font-head:'Inter',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif; --font-mono:'JetBrains Mono',monospace;
+  --fs-h1:22px; --label-transform:none; --label-tracking:.04em; --gap:12px; --pad:16px; --ctl-h:46px;
+  --icon-stroke:1.8; --icon-cap:round; --dur:.18s; --ease:cubic-bezier(.2,.9,.1,1); --nav-bg:rgba(255,255,255,.72);
+  --scrim: rgba(11,27,51,.4); --swatch-border: rgba(255,255,255,.8); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -16px 40px -22px rgba(11,27,51,.55);
+  --shadow-press: 0 4px 10px -8px rgba(11,27,51,.6);
+  --glow: none;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-fg: #5B7593; --nav-fg-active: #0B1B33;
+}

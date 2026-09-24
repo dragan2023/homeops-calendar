@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="brutal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>方案 C · 新粗野高密度（brutal 令牌）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+html[data-theme="brutal"]{
+  --bg:#F4F1EA; --surface:#FFFFFF; --surface-2:#EFEBE0; --border:#0A0A0A; --border-w:3px; --border-strong:#0A0A0A;
+  --text:#0A0A0A; --text-2:#2B2B2B; --text-3:#4A4A4A; --on-primary:#0A0A0A;
+  --primary:#FFE94A; --primary-soft:#FFF7C2; --accent:#285CDB; --accent-soft:#E4EBFF;
+  --warn:#B45309; --warn-soft:#FFF7C2; --danger:#B32922; --danger-soft:#FFD9D6;
+  --success:#00764B; --success-soft:#D6F5E7;
+  --radius-card:0px; --radius-ctl:0px; --radius-pill:0px;
+  --shadow-card:6px 6px 0 #0A0A0A; --shadow-ctl:4px 4px 0 #0A0A0A;
+  --font-head:'Space Mono',monospace; --font-body:'Space Mono',monospace;
+  --gap:14px; --pad:14px; --ctl-h:48px; --label-tracking:.14em; --scrim:rgba(10,10,10,.5);
+  --shadow-sheet: 0 -8px 0 0 #0A0A0A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#E7E2D6;font-family:var(--font-body);color:var(--text);padding:26px 20px 60px}
+.page-head{max-width:1440px;margin:0 auto 20px}
+.page-head h1{font-size:19px;margin:0 0 6px;letter-spacing:.02em}
+.page-head p{margin:0;color:var(--text-2);font-size:12.5px;line-height:1.65}
+.row{max-width:1440px;margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.cap{font-size:12px;color:var(--text-2);margin:0 0 8px;max-width:345px;line-height:1.6}
+.cap b{color:var(--text)}
+.phone{width:345px;background:var(--bg);border:var(--border-w) solid var(--border);overflow:hidden;position:relative}
+.status{display:flex;justify-content:space-between;font-size:10.5px;padding:8px 12px 2px;color:var(--text-2)}
+.appbar{display:flex;justify-content:space-between;align-items:center;border-bottom:var(--border-w) solid var(--border);padding:8px 12px}
+.appbar h2{margin:0;font-size:17px;letter-spacing:.02em}
+.appbar span{font-size:10.5px;background:var(--primary);border:2px solid var(--border);padding:2px 7px}
+.body{padding:12px}
+.lab{font-size:10.5px;letter-spacing:var(--label-tracking);text-transform:uppercase;font-weight:700;margin:12px 0 5px}
+.inp{min-height:44px;border:2px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:13.5px}
+.inp.on{background:var(--primary-soft);box-shadow:var(--shadow-ctl)}
+.inp .h{font-size:10.5px;color:var(--text-3)}
+.btn{min-height:46px;border:2px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;box-shadow:var(--shadow-ctl)}
+.btn.pri{background:var(--primary)}
+.tabs{display:flex;gap:0;border:2px solid var(--border);overflow:hidden}
+.tabs span{flex:1;text-align:center;font-size:11px;padding:7px 0;border-right:2px solid var(--border);background:var(--surface)}
+.tabs span:last-child{border-right:0}
+.tabs span.on{background:var(--primary);font-weight:700}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);border:2px solid var(--border)}
+.tbl th{text-align:left;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;background:var(--surface-2);border-bottom:2px solid var(--border)}
+.tbl td{padding:7px 8px;border-bottom:1px solid #D8D2C4}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl td.sel{background:var(--primary-soft)}
+.tbl .child{color:var(--text-2);padding-left:18px}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-top:var(--border-w) solid var(--border);box-shadow:var(--shadow-sheet);padding:12px 12px 16px}
+.sheet h3{margin:0 0 10px;font-size:15px;letter-spacing:.02em}
+.search{border:2px solid var(--border);min-height:38px;display:flex;align-items:center;padding:0 10px;font-size:12px;color:var(--text-3);background:var(--surface-2)}
+.li{display:flex;align-items:center;gap:8px;border-bottom:1px solid #D8D2C4;min-height:42px;font-size:13px}
+.li:last-child{border-bottom:0}
+.li .n{flex:1}
+.li .c{font-size:10.5px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.li.child .n{padding-left:16px;color:var(--text-2)}
+.li.on{background:var(--primary-soft);font-weight:700}
+.li .k{font-size:10px;border:2px solid var(--border);padding:0 5px;background:var(--surface-2)}
+.selbar{position:absolute;left:0;right:0;bottom:0;border-top:var(--border-w) solid var(--border);background:var(--primary);display:flex;align-items:center;justify-content:space-between;padding:10px 12px;font-size:12.5px;font-weight:700}
+.selbar .go{border:2px solid var(--border);background:var(--surface);padding:6px 10px}
+.cal{width:100%;border-collapse:collapse;text-align:center;font-size:12px;background:var(--surface);border:2px solid var(--border)}
+.cal th{background:var(--surface-2);font-size:10px;padding:5px 0;border-bottom:2px solid var(--border)}
+.cal td{padding:6px 0;border-right:1px solid #E2DCCE;border-bottom:1px solid #E2DCCE}
+.cal td:last-child{border-right:0}
+.cal td.sel{background:var(--primary);font-weight:700}
+.cal td.today{background:var(--accent-soft);font-weight:700;color:var(--accent)}
+.cal td.dim{color:#B4AE9F}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
+.quick span{border:2px solid var(--border);background:var(--surface-2);text-align:center;font-size:10.5px;padding:6px 0}
+.quick span.on{background:var(--primary);font-weight:700}
+.notes{max-width:1440px;margin:26px auto 0;background:#fff;border:3px solid #0A0A0A;box-shadow:6px 6px 0 #0A0A0A;padding:14px 18px}
+.notes div{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.notes li{font-size:12.5px;color:var(--text-2);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="page-head">
+  <h1>方案 C · 新粗野高密度</h1>
+  <p>把三个交互都做成<b>表格/清单</b>式：容器一行一个、数字对齐、点哪改哪。日期用「相对天数快捷键 + 紧凑月历 + 沿用上次保质期」。适合东西多、想把一屏塞满信息的用法。</p>
+</div>
+
+<div class="row">
+  <div class="col">
+    <p class="cap"><b>① 放哪儿 → 紧凑清单 + 类型分栏</b><br>顶部按类型分栏（冷藏/柜子/其它），下面是逐行清单，行尾直接显示「12 样 · 34 件」，键盘式快速定位（最近用过打 <span style="border:1px solid #0A0A0A;padding:0 3px">RECENT</span>）。</p>
+    <div class="phone">
+      <div class="status"><span>09:31</span><span>5G 77%</span></div>
+      <div class="appbar"><h2>随手记一笔</h2><span>SWISS</span></div>
+      <div class="body">
+        <div class="lab">名称</div><div class="inp">细云龙</div>
+        <div class="lab">数量 / 放哪儿</div><div class="inp">1<span class="h">储物柜 ▾</span></div>
+        <div class="lab">到期日</div><div class="inp">2026-10-07<span class="h">还有 13 天 ▾</span></div>
+        <div class="btn pri" style="margin-top:14px">入库</div>
+      </div>
+      <div class="sheet">
+        <h3>放到哪里</h3>
+        <div class="tabs"><span class="on">全部</span><span>冷藏</span><span>柜子</span><span>其它</span></div>
+        <div class="search" style="margin-top:8px">搜容器名…（或直接输入新容器名新建）</div>
+        <div class="li on"><span class="n">储物柜</span><span class="k">RECENT</span><span class="c">8 样 · 21 件</span></div>
+        <div class="li"><span class="n">冰箱</span><span class="k">RECENT</span><span class="c">12 样 · 34 件</span></div>
+        <div class="li child"><span class="n">冷冻室</span><span class="c">3 样 · 9 件</span></div>
+        <div class="li child"><span class="n">冷藏室</span><span class="c">9 样 · 25 件</span></div>
+        <div class="li"><span class="n">阳台</span><span class="c">2 样 · 4 件</span></div>
+        <div class="li"><span class="n">药箱</span><span class="c">5 样 · 16 件</span></div>
+        <div class="btn" style="margin-top:10px">＋ 新建容器</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <p class="cap"><b>② 到期日 → 快捷键 + 紧凑月历</b><br>「今天 / +3 / +7 / +14 / +30」一格点完；右下角「沿用上次」= 这个物品上次入库的保质期天数（东西都一样，省得每次算）。</p>
+    <div class="phone">
+      <div class="status"><span>09:31</span><span>5G 77%</span></div>
+      <div class="appbar"><h2>随手记一笔</h2><span>SWISS</span></div>
+      <div class="body">
+        <div class="lab">名称</div><div class="inp">细云龙</div>
+        <div class="lab">数量 / 放哪儿</div><div class="inp">1<span class="h">储物柜 ▾</span></div>
+        <div class="lab">到期日</div><div class="inp on">2026-10-07<span class="h">还有 13 天 ▾</span></div>
+        <div class="btn pri" style="margin-top:14px">入库</div>
+      </div>
+      <div class="sheet">
+        <h3>什么时候到期</h3>
+        <div class="quick"><span>今天</span><span>+3 天</span><span class="on">+7 天</span><span>+14 天</span><span>+30 天</span><span>月底</span><span>沿用上次</span><span>清空</span></div>
+        <table class="cal">
+          <tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr>
+          <tr><td class="dim">28</td><td class="dim">29</td><td class="dim">30</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+          <tr><td>5</td><td>6</td><td class="sel">7</td><td>8</td><td>9</td><td>10</td><td>11</td></tr>
+          <tr><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td></tr>
+          <tr><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td class="today">24</td><td>25</td></tr>
+          <tr><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td class="dim">1</td></tr>
+        </table>
+        <div class="li" style="margin-top:8px"><span class="n">好了</span><span class="c">2026-10-07</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <p class="cap"><b>③ 库存 · 容器表格 + 批量移动</b><br>容器是一张表（名称 / 层级 / 物品数 / 件数 / 操作），列头可排序；勾选物品后底部栏「移动到…」弹出同一套清单选择目标。</p>
+    <div class="phone">
+      <div class="status"><span>09:31</span><span>5G 77%</span></div>
+      <div class="appbar"><h2>存储容器</h2><span>5 在用</span></div>
+      <div class="body">
+        <table class="tbl">
+          <tr><th>容器</th><th>层级</th><th style="text-align:right">物品</th><th style="text-align:right">件数</th></tr>
+          <tr><td>冰箱</td><td>顶层</td><td class="num">12</td><td class="num">34</td></tr>
+          <tr><td class="child">冷冻室</td><td>冰箱 ›</td><td class="num">3</td><td class="num">9</td></tr>
+          <tr><td class="sel">储物柜</td><td>顶层</td><td class="num">8</td><td class="num">21</td></tr>
+          <tr><td>阳台</td><td>顶层</td><td class="num">2</td><td class="num">4</td></tr>
+          <tr><td>药箱</td><td>顶层</td><td class="num">5</td><td class="num">16</td></tr>
+        </table>
+        <div style="display:flex;gap:6px;margin-top:10px">
+          <div class="btn" style="flex:1">重命名</div>
+          <div class="btn" style="flex:1">上下移</div>
+          <div class="btn" style="flex:1">停用</div>
+        </div>
+        <div class="lab">储物柜里的东西（可多选后移动）</div>
+        <table class="tbl">
+          <tr><th>物品</th><th style="text-align:right">件数</th><th style="text-align:right">到期</th></tr>
+          <tr><td class="sel">☑ 细云龙</td><td class="num">1</td><td class="num">10-07</td></tr>
+          <tr><td class="sel">☑ 酸奶</td><td class="num">2</td><td class="num">09-23</td></tr>
+          <tr><td>☐ 牛奶</td><td class="num">3</td><td class="num">10-02</td></tr>
+        </table>
+      </div>
+      <div class="selbar"><span>已选 2 项 · 共 3 件</span><span class="go">移动到…</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <div>这一版的样子</div>
+  <ul>
+    <li>一屏能看到最多信息：容器 + 数字 + 层级都在表格里对齐，适合东西多、经常盘点的用法。</li>
+    <li>日期给了「沿用上次」——同一物品重复入库时不用每次重算保质期。</li>
+    <li>批量移动：勾选 → 底部栏「移动到…」→ 同一套容器清单选目标（后端一次事务里逐批调拨）。</li>
+    <li>「上下移」对应数据库里已有的排序字段，容器顺序可以自己定。</li>
+  </ul>
+</div>
+</body>
+</html>

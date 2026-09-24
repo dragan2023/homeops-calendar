@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "家庭仓管日历",
+    "slug": "homeops-calendar",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F1F3F5",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F1F3F5"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.homeops.calendar"
+    },
+    "android": {
+      "package": "com.homeops.calendar",
+      "usesCleartextTraffic": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0F172A"
+      }
+    },
+    "plugins": [
+      ["expo-camera", { "cameraPermission": "「家庭仓管日历」用相机扫描商品条码，把东西记进家里库存。" }]
+    ],
+    "extra": {
+      "apiPort": 8787,
+      "apiBaseUrl": ""
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "design_system": {
+    "project_name": "HomeOps",
+    "category": "Analytics Dashboard",
+    "pattern": {
+      "name": "Enterprise Gateway",
+      "sections": "Hero (Video/Mission) > Solutions by Industry > Solutions by Role > Client Logos > Contact Sales",
+      "cta_placement": "Contact Sales (Primary) + Login (Secondary)",
+      "color_strategy": "Corporate: Navy/Grey. High integrity. Conservative accents.",
+      "conversion": "Path selection (I am a...). Mega menu navigation. Trust signals prominent. Provide pause/stop for video and rotating logos; stop on focus and reduced motion. Logo carousel controls must be keyboard operable; pause moving media offscreen/hidden and render a static final state under reduced motion."
+    },
+    "style": {
+      "id": "brutalism",
+      "name": "Brutalism",
+      "type": "General",
+      "effects": "No smooth transitions (instant), sharp corners (0px), bold typography (700+), visible grid, large blocks",
+      "keywords": "Raw, unpolished, stark, high contrast, plain text, default fonts, visible borders, asymmetric, anti-design",
+      "best_for": "Design portfolios, artistic projects, counter-culture brands, editorial/media sites, tech blogs",
+      "performance": "cost:low|drivers:none",
+      "accessibility": "risk:low|requires:contrast-text-4.5,keyboard,visible-focus,reduced-motion",
+      "light_mode": "supported",
+      "dark_mode": "supported"
+    },
+    "colors": {
+      "primary": "#1E40AF",
+      "on_primary": "#FFFFFF",
+      "secondary": "#3B82F6",
+      "on_secondary": "#000000",
+      "accent": "#D97706",
+      "on_accent": "#000000",
+      "background": "#F8FAFC",
+      "foreground": "#1E3A8A",
+      "card": "#FFFFFF",
+      "card_foreground": "#1E3A8A",
+      "muted": "#E9EEF6",
+      "muted_foreground": "#475569",
+      "border": "#DBEAFE",
+      "destructive": "#DC2626",
+      "on_destructive": "#FFFFFF",
+      "ring": "#1E40AF",
+      "notes": "Blue data + amber highlights [Accent adjusted from #F59E0B]",
+      "cta": "#D97706",
+      "text": "#1E3A8A",
+      "on_cta": "#000000"
+    },
+    "typography": {
+      "heading": "Fira Code",
+      "body": "Fira Sans",
+      "mood": "dashboard, data, analytics, code, technical, precise",
+      "best_for": "Dashboards, analytics, data visualization, admin panels",
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap",
+      "css_import": "@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');"
+    },
+    "key_effects": "No smooth transitions (instant), sharp corners (0px), bold typography (700+), visible grid, large blocks",
+    "anti_patterns": "Ornate design + No filtering",
+    "decision_rules": {
+      "must_have": [
+        "constraint:data-export"
+      ],
+      "if_large_dataset": [
+        "constraint:virtualize-lists"
+      ]
+    },
+    "activated_rules": [
+      {
+        "condition": "must_have",
+        "actions": [
+          "constraint:data-export"
+        ]
+      }
+    ],
+    "constraints": [
+      "data-export"
+    ],
+    "reasoning_default": false,
+    "source_identities": {
+      "product": "Analytics Dashboard",
+      "reasoning": "Analytics Dashboard",
+      "style": "brutalism",
+      "color": "Analytics Dashboard",
+      "typography": "Dashboard Data",
+      "landing": "Enterprise Gateway"
+    },
+    "source_derivations": {
+      "color_mode": null
+    },
+    "severity": "HIGH",
+    "dials": {
+      "variance": 9,
+      "variance_label": "Bold / Asymmetric",
+      "motion": 8,
+      "motion_label": "Complex",
+      "density": 8,
+      "density_label": "Dense / Dashboard"
+    },
+    "motion_snippet": {
+      "Category": "Page Transition",
+      "Intensity Tier": "Complex",
+      "Trigger": "route change",
+      "Duration": "500-800ms",
+      "Easing": "expo.inOut",
+      "GSAP Snippet": "const state = Flip.getState('.hero-image'); navigate(); Flip.from(state, { duration: 0.6, ease: 'expo.inOut', absolute: true, zIndex: 100 });",
+      "Framework Notes": "Requires the GSAP Flip plugin; the 'from' and 'to' route must render the same element with a shared data-flip-id; Use matchMedia('(prefers-reduced-motion: reduce)') to skip non-essential motion and render the final state immediately",
+      "Do": "Verify the shared element exists in both DOM states before calling Flip.from to avoid a silent no-op",
+      "Don't": "Don't use shared-element transitions across more than one element pair per navigation; compounding Flips are hard to time correctly",
+      "Performance Notes": "Flip recalculates layout (FLIP technique) so test on low-end devices for jank"
+    },
+    "spacing_scale": {
+      "xs": "2px",
+      "sm": "4px",
+      "md": "8px",
+      "lg": "12px",
+      "xl": "16px",
+      "2xl": "24px",
+      "3xl": "32px"
+    }
+  },
+  "persistence": null
+}

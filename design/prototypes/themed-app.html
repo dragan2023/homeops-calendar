@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="swiss">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>家庭仓管日历 · 多主题原型（8 套主题可切换）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Lora:wght@500;600;700&family=Raleway:wght@300;400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&family=Share+Tech+Mono&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Fira+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   家庭仓管日历 · 多主题原型
+   架构：组件只读语义令牌（CSS 变量）；每套主题 = 一个 [data-theme] 令牌块。
+   换主题 = 换 html 上的 data-theme，不动任何组件代码。
+   ========================================================================== */
+:root{
+  /* —— 令牌契约（每套主题都必须定义；下面这份是 swiss 默认值兜底） —— */
+  --bg:#F1F3F5; --bg-deco:none; --surface:#FFFFFF; --surface-2:#F7F8F9;
+  --border:#E3E7EA; --border-w:1px; --border-strong:#C9D0D6;
+  --text:#0F172A; --text-2:#334155; --text-3:#5B6472; --on-primary:#FFFFFF;
+  --primary:#0F172A; --primary-soft:#EDEFF2; --accent:#047857; --accent-soft:#ECFDF5;
+  --warn:#B45309; --warn-soft:#FFFBEB; --danger:#B91C1C; --danger-soft:#FEF2F2;
+  --success:#047857; --success-soft:#ECFDF5; --info:#1D4ED8; --info-soft:#EFF6FF;
+  --radius-card:12px; --radius-ctl:8px; --radius-pill:999px;
+  --shadow-card:none; --shadow-ctl:none; --shadow-press:none; --glow:none;
+  --font-head:'Plus Jakarta Sans',system-ui,sans-serif; --font-body:'Plus Jakarta Sans',system-ui,sans-serif; --font-mono:ui-monospace,monospace;
+  --fs-h1:24px; --fs-h2:12px; --label-transform:uppercase; --label-tracking:.12em;
+  --gap:12px; --pad:16px; --ctl-h:44px; --dur:.18s; --ease:ease;
+  --icon-stroke:1.75; --icon-cap:round; --clip-card:none; --nav-bg:rgba(255,255,255,.96);
+  color-scheme:light;
+  --scrim: rgba(8,12,20,.45); --swatch-border: rgba(0,0,0,.18); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -16px 40px -24px rgba(0,0,0,.6);
+  --nav-fg: #5B6472; --nav-fg-active: #0F172A;
+}
+/* —— 主题 1：瑞士极简 —— */
+html[data-theme="swiss"]{
+  --bg:#F1F3F5; --surface:#FFFFFF; --surface-2:#F7F8F9; --border:#E3E7EA; --border-w:1px; --border-strong:#C9D0D6;
+  --text:#0F172A; --text-2:#334155; --text-3:#5B6472; --on-primary:#FFFFFF;
+  --primary:#0F172A; --primary-soft:#EDEFF2; --accent:#047857; --accent-soft:#ECFDF5;
+  --warn:#B45309; --warn-soft:#FFFBEB; --danger:#B91C1C; --danger-soft:#FEF2F2;
+  --success:#047857; --success-soft:#ECFDF5; --info:#1D4ED8; --info-soft:#EFF6FF;
+  --radius-card:10px; --radius-ctl:6px; --radius-pill:999px;
+  --shadow-card:none; --shadow-ctl:none; --shadow-press:none;
+  --font-head:'Plus Jakarta Sans',system-ui,sans-serif; --font-body:'Plus Jakarta Sans',system-ui,sans-serif; --font-mono:ui-monospace,monospace;
+  --fs-h1:24px; --fs-h2:12px; --label-transform:uppercase; --label-tracking:.12em;
+  --gap:12px; --pad:16px; --ctl-h:44px; --dur:.18s; --ease:ease;
+  --icon-stroke:1.75; --icon-cap:round;
+  --scrim: rgba(8,12,20,.45); --swatch-border: rgba(0,0,0,.18); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -16px 40px -24px rgba(0,0,0,.6);
+  --bg-deco: none;
+  --glow: none;
+  --clip-card: none;
+  --nav-bg: rgba(255,255,255,.96);
+  --nav-fg: #5B6472; --nav-fg-active: #0F172A;
+}
+/* —— 主题 2：新粗野 —— */
+html[data-theme="brutal"]{
+  --bg:#F4F1EA; --surface:#FFFFFF; --surface-2:#EFEBE0; --border:#0A0A0A; --border-w:3px; --border-strong:#0A0A0A;
+  --text:#0A0A0A; --text-2:#2B2B2B; --text-3:#4A4A4A; --on-primary:#0A0A0A;
+  --primary:#FFE94A; --primary-soft:#FFF7C2; --accent:#285CDB; --accent-soft:#E4EBFF;
+  --warn:#B45309; --warn-soft:#FFF7C2; --danger:#B32922; --danger-soft:#FFD9D6;
+  --success:#00764B; --success-soft:#D6F5E7; --info:#285CDB; --info-soft:#E4EBFF;
+  --radius-card:0px; --radius-ctl:0px; --radius-pill:0px;
+  --shadow-card:6px 6px 0 #0A0A0A; --shadow-ctl:4px 4px 0 #0A0A0A; --shadow-press:2px 2px 0 #0A0A0A;
+  --font-head:'Space Mono',monospace; --font-body:'Space Mono',monospace; --font-mono:'Space Mono',monospace;
+  --fs-h1:22px; --label-tracking:.14em; --gap:14px; --pad:14px; --ctl-h:48px; --dur:.1s; --ease:linear;
+  --icon-stroke:2.25; --icon-cap:square; --nav-bg:#0A0A0A;
+  --scrim: rgba(10,10,10,.5); --swatch-border: rgba(0,0,0,.3); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -8px 0 0 #0A0A0A;
+  --bg-deco: none;
+  --glow: none;
+  --fs-h2: 12px;
+  --label-transform: uppercase;
+  --clip-card: none;
+  --nav-fg: #C9C9C9; --nav-fg-active: #FFE94A;
+}
+/* —— 主题 3：柔和黏土 —— */
+html[data-theme="clay"]{
+  --bg:#F6EFE6; --surface:#FFFDF9; --surface-2:#FBF5EC; --border:#EFE3D4; --border-w:3px; --border-strong:#D9C9B6;
+  --text:#2F2A26; --text-2:#4A423B; --text-3:#6E645C; --on-primary:#FFFFFF;
+  --primary:#15803D; --primary-soft:#D8F0DF; --accent:#6252BB; --accent-soft:#E6E6FA;
+  --warn:#A94E08; --warn-soft:#FDF0D5; --danger:#B91C1C; --danger-soft:#FBE3E1;
+  --success:#137337; --success-soft:#D8F0DF; --info:#1D4ED8; --info-soft:#DCEAFB;
+  --radius-card:26px; --radius-ctl:20px; --radius-pill:999px;
+  --shadow-card:inset 0 -3px 0 #D9C9B6, inset 0 2px 0 #fff, 0 10px 22px -14px rgba(47,42,38,.55);
+  --shadow-ctl:inset 0 -3px 0 #D9C9B6, inset 0 2px 0 #fff, 0 8px 18px -12px rgba(47,42,38,.5);
+  --shadow-press:inset 0 -1px 0 #D9C9B6, 0 2px 6px -4px rgba(47,42,38,.5);
+  --font-head:'Lora',Georgia,serif; --font-body:'Raleway',system-ui,sans-serif;
+  --fs-h1:21px; --label-transform:none; --label-tracking:.04em; --gap:12px; --pad:18px; --ctl-h:48px;
+  --dur:.22s; --ease:cubic-bezier(.34,1.56,.64,1); --icon-stroke:1.8; --icon-cap:round;
+  --scrim: rgba(47,42,38,.42); --swatch-border: rgba(0,0,0,.14); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -14px 34px -20px rgba(47,42,38,.7);
+  --bg-deco: none;
+  --glow: none;
+  --font-mono: ui-monospace,monospace;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-bg: rgba(255,253,249,.97);
+  --nav-fg: #6E645C; --nav-fg-active: #15803D;
+}
+/* —— 主题 4：卡通粉（少女/可爱） —— */
+html[data-theme="kawaii"]{
+  --bg:#FFF1F6; --bg-deco:radial-gradient(#FFD6E7 1.6px, transparent 1.7px); --surface:#FFFFFF; --surface-2:#FFF7FA;
+  --border:#FFD1E3; --border-w:3px; --border-strong:#FFAFD0;
+  --text:#5B2340; --text-2:#7A3856; --text-3:#9A5F7B; --on-primary:#5B2340;
+  --primary:#FF6FA5; --primary-soft:#FFE3EF; --accent:#724BCA; --accent-soft:#EFE7FF;
+  --warn:#BA3E0C; --warn-soft:#FFEEDD; --danger:#C2193E; --danger-soft:#FFE1E8;
+  --success:#0B7954; --success-soft:#DCFCE7; --info:#7C3AED; --info-soft:#EFE7FF;
+  --radius-card:28px; --radius-ctl:22px; --radius-pill:999px;
+  --shadow-card:0 6px 0 #FFD1E3, 0 14px 26px -18px rgba(255,111,165,.9);
+  --shadow-ctl:0 4px 0 #FFD1E3;
+  --shadow-press:0 1px 0 #FFD1E3;
+  --font-head:'Fredoka','Nunito',sans-serif; --font-body:'Nunito',system-ui,sans-serif;
+  --fs-h1:23px; --label-transform:none; --label-tracking:.02em; --gap:12px; --pad:16px; --ctl-h:48px;
+  --dur:.24s; --ease:cubic-bezier(.34,1.56,.64,1); --icon-stroke:2.4; --icon-cap:round; --nav-bg:rgba(255,255,255,.98);
+  --scrim: rgba(91,35,64,.42); --swatch-border: rgba(0,0,0,.16); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -10px 30px -18px rgba(255,111,165,.8);
+  --glow: none;
+  --font-mono: ui-monospace,monospace;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-fg: #9A5F7B; --nav-fg-active: #C2193E;
+}
+/* —— 主题 5：机甲 HUD（科技/男生） —— */
+html[data-theme="mecha"]{
+  --bg:#070B12; --bg-deco:repeating-linear-gradient(0deg, rgba(0,229,255,.06) 0 1px, transparent 1px 4px);
+  --surface:#0E1620; --surface-2:#121C28; --border:#1F3A4D; --border-w:1px; --border-strong:#00E5FF;
+  --text:#DCEBF5; --text-2:#9FC0D4; --text-3:#6E8FA6; --on-primary:#04121A;
+  --primary:#00E5FF; --primary-soft:#0B2A33; --accent:#FFB020; --accent-soft:#2A1F06;
+  --warn:#FFB020; --warn-soft:#2A1F06; --danger:#FF4D4D; --danger-soft:#2A0E10;
+  --success:#22E08A; --success-soft:#082A1E; --info:#4DA3FF; --info-soft:#0A2136;
+  --radius-card:2px; --radius-ctl:2px; --radius-pill:2px;
+  --shadow-card:0 0 0 1px rgba(0,229,255,.25), 0 0 24px -12px rgba(0,229,255,.8);
+  --shadow-ctl:0 0 0 1px rgba(0,229,255,.35);
+  --shadow-press:0 0 12px -4px rgba(0,229,255,.8) inset; --glow:0 0 8px rgba(0,229,255,.55);
+  --font-head:'Orbitron','Exo 2',sans-serif; --font-body:'Exo 2',system-ui,sans-serif; --font-mono:'Share Tech Mono',monospace;
+  --fs-h1:20px; --label-tracking:.2em; --gap:10px; --pad:14px; --ctl-h:48px; --dur:.12s; --ease:cubic-bezier(.2,.9,.1,1);
+  --icon-stroke:1.6; --icon-cap:square; --clip-card:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+  --nav-bg:rgba(14,22,32,.98); color-scheme:dark;
+  --scrim: rgba(0,0,0,.62); --swatch-border: rgba(255,255,255,.28); --badge-text: #140000;
+  --shadow-sheet: 0 -16px 40px -22px rgba(0,229,255,.45);
+  --fs-h2: 12px;
+  --label-transform: uppercase;
+  --nav-fg: #9FC0D4; --nav-fg-active: #00E5FF;
+}
+/* —— 主题 6：暗夜护眼（深色暖琥珀） —— */
+html[data-theme="midnight"]{
+  --bg:#0F172A; --surface:#192134; --surface-2:#1F2942; --border:rgba(255,255,255,.10); --border-w:1px; --border-strong:rgba(255,255,255,.22);
+  --text:#EDF1F7; --text-2:#C3CDDE; --text-3:#94A3B8; --on-primary:#0F172A;
+  --primary:#F0B44A; --primary-soft:#2C2415; --accent:#8E80F6; --accent-soft:#231F45;
+  --warn:#F0B44A; --warn-soft:#2C2415; --danger:#F87171; --danger-soft:#33191C;
+  --success:#4ADE80; --success-soft:#122C22; --info:#7DA9FF; --info-soft:#16233D;
+  --radius-card:16px; --radius-ctl:12px; --radius-pill:999px;
+  --shadow-card:0 10px 24px -18px rgba(0,0,0,.9); --shadow-ctl:0 6px 14px -10px rgba(0,0,0,.9);
+  --font-head:'Fira Sans',system-ui,sans-serif; --font-body:'Fira Sans',system-ui,sans-serif; --font-mono:'Fira Code',monospace;
+  --fs-h1:21px; --label-transform:none; --label-tracking:.04em; --gap:12px; --pad:16px; --ctl-h:46px;
+  --icon-stroke:1.9; --icon-cap:round; --dur:.2s; --ease:ease; --nav-bg:rgba(25,33,52,.97); color-scheme:dark;
+  --scrim: rgba(0,0,0,.6); --swatch-border: rgba(255,255,255,.22); --badge-text: #2A0B0B;
+  --shadow-sheet: 0 -16px 40px -22px rgba(0,0,0,.9);
+  --bg-deco: none;
+  --shadow-press: 0 4px 10px -6px rgba(0,0,0,.9);
+  --glow: none;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-fg: #94A3B8; --nav-fg-active: #F0B44A;
+}
+/* —— 主题 7：孟菲斯 80s（多彩几何，潮流） —— */
+html[data-theme="memphis"]{
+  --bg:#FFFDF6; --bg-deco:conic-gradient(from 45deg at 12% 8%, #FF71CE22 0 25%, transparent 0 100%),
+    conic-gradient(from 200deg at 88% 92%, #86CCCA33 0 25%, transparent 0 100%);
+  --surface:#FFFFFF; --surface-2:#FFF6E8; --border:#111111; --border-w:3px; --border-strong:#111111;
+  --text:#111111; --text-2:#333333; --text-3:#5A5A5A; --on-primary:#111111;
+  --primary:#FFCE5C; --primary-soft:#FFF1CC; --accent:#99447C; --accent-soft:#FFE1F5;
+  --warn:#9C5604; --warn-soft:#FFF1CC; --danger:#AD3838; --danger-soft:#FFE0E0;
+  --success:#0B7954; --success-soft:#DCFCE7; --info:#556290; --info-soft:#E7EBF7;
+  --radius-card:4px; --radius-ctl:4px; --radius-pill:999px;
+  --shadow-card:8px 8px 0 #111111; --shadow-ctl:5px 5px 0 #111111; --shadow-press:2px 2px 0 #111111;
+  --font-head:'Inter',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif; --font-mono:'JetBrains Mono',monospace;
+  --fs-h1:22px; --label-tracking:.1em; --gap:12px; --pad:16px; --ctl-h:46px; --dur:.14s; --ease:cubic-bezier(.2,.9,.1,1);
+  --icon-stroke:2.1; --icon-cap:round;
+  --scrim: rgba(17,17,17,.5); --swatch-border: rgba(0,0,0,.25); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -10px 0 0 #111111;
+  --glow: none;
+  --fs-h2: 12px;
+  --label-transform: uppercase;
+  --clip-card: none;
+  --nav-bg: rgba(255,253,246,.98);
+  --nav-fg: #5A5A5A; --nav-fg-active: #111111;
+}
+/* —— 主题 8：极光玻璃（浅色通透） —— */
+html[data-theme="glass"]{
+  --bg:#EAF2FF; --bg-deco:radial-gradient(60% 40% at 15% 10%, #A5D8FF 0%, transparent 60%),
+    radial-gradient(50% 40% at 85% 20%, #FFC9DE 0%, transparent 60%),
+    radial-gradient(60% 50% at 50% 95%, #B9F5D8 0%, transparent 65%);
+  --surface:rgba(255,255,255,.62); --surface-2:rgba(255,255,255,.42);
+  --border:rgba(255,255,255,.75); --border-w:1px; --border-strong:rgba(255,255,255,.95);
+  --text:#0B1B33; --text-2:#33506E; --text-3:#57708D; --on-primary:#FFFFFF;
+  --primary:#1D4ED8; --primary-soft:rgba(29,78,216,.14); --accent:#0A6C4B; --accent-soft:rgba(14,159,110,.16);
+  --warn:#9E4908; --warn-soft:rgba(245,158,11,.18); --danger:#B91C1C; --danger-soft:rgba(220,38,38,.14);
+  --success:#0A6C4B; --success-soft:rgba(14,159,110,.16); --info:#1D4ED8; --info-soft:rgba(29,78,216,.14);
+  --radius-card:20px; --radius-ctl:14px; --radius-pill:999px;
+  --shadow-card:0 12px 30px -20px rgba(11,27,51,.55), inset 0 1px 0 rgba(255,255,255,.9);
+  --shadow-ctl:0 8px 18px -12px rgba(11,27,51,.5);
+  --font-head:'Inter',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif; --font-mono:'JetBrains Mono',monospace;
+  --fs-h1:22px; --label-transform:none; --label-tracking:.04em; --gap:12px; --pad:16px; --ctl-h:46px;
+  --icon-stroke:1.8; --icon-cap:round; --dur:.18s; --ease:cubic-bezier(.2,.9,.1,1); --nav-bg:rgba(255,255,255,.72);
+  --scrim: rgba(11,27,51,.4); --swatch-border: rgba(255,255,255,.8); --badge-text: #FFFFFF;
+  --shadow-sheet: 0 -16px 40px -22px rgba(11,27,51,.55);
+  --shadow-press: 0 4px 10px -8px rgba(11,27,51,.6);
+  --glow: none;
+  --fs-h2: 12px;
+  --clip-card: none;
+  --nav-fg: #5B7593; --nav-fg-active: #0B1B33;
+}
+
+/* ========================== 组件（只读令牌） ========================== */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg); background-image:var(--bg-deco); background-size:14px 14px, auto;
+  color:var(--text); font-family:var(--font-body); font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased}
+.app{max-width:430px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; position:relative}
+header{padding:calc(var(--pad) + env(safe-area-inset-top)) var(--pad) 10px; background:var(--surface);
+  backdrop-filter:blur(10px); border-bottom:var(--border-w) solid var(--border)}
+.brandrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.brand{font-family:var(--font-head); font-weight:700; font-size:13px; letter-spacing:var(--label-tracking); text-transform:var(--label-transform)}
+.brand em{font-style:normal; color:var(--accent)}
+.themebtn{min-height:var(--ctl-h); min-width:var(--ctl-h); padding:0 12px; display:inline-flex; align-items:center; gap:6px;
+  border:var(--border-w) solid var(--border); background:var(--surface-2); color:var(--text-2); border-radius:var(--radius-ctl);
+  box-shadow:var(--shadow-ctl); font:inherit; font-size:12px; font-weight:600; cursor:pointer}
+.themebtn:active{box-shadow:var(--shadow-press)}
+.dots8{display:inline-flex; gap:3px}
+.dots8 i{width:8px;height:8px;border-radius:50%;display:block}
+h1.page{font-family:var(--font-head); font-size:var(--fs-h1); margin:10px 0 0; line-height:1.2; font-weight:700}
+.hd-sub{font-size:12px; color:var(--text-3); margin-top:4px}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); margin-top:var(--gap)}
+.stat{background:var(--surface-2); border:var(--border-w) solid var(--border); border-radius:var(--radius-card); padding:10px 12px}
+.stat b{display:block; font-family:var(--font-head); font-size:24px; line-height:1.1; font-variant-numeric:tabular-nums}
+.stat span{font-size:11px; color:var(--text-3); letter-spacing:var(--label-tracking); text-transform:var(--label-transform)}
+.stat.warn{background:var(--warn-soft)} .stat.ok{background:var(--success-soft)}
+main{flex:1; overflow-y:auto; padding:var(--pad) var(--pad) 108px}
+section[hidden]{display:none}
+.block{margin-bottom:20px}
+.block-head{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px}
+.block-head h2{font-family:var(--font-head); font-size:var(--fs-h2); margin:0; letter-spacing:var(--label-tracking); text-transform:var(--label-transform)}
+.block-head small{font-size:11.5px; color:var(--text-3)}
+.card{background:var(--surface); border:var(--border-w) solid var(--border); border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card); clip-path:var(--clip-card); backdrop-filter:blur(14px); overflow:hidden}
+.hero{padding:var(--pad); border:var(--border-w) solid var(--border); border-radius:var(--radius-card); background:var(--primary-soft);
+  box-shadow:var(--shadow-card); clip-path:var(--clip-card)}
+.hero .k{font-size:11px; letter-spacing:var(--label-tracking); text-transform:var(--label-transform); color:var(--text-3)}
+.hero .t{font-family:var(--font-head); font-size:20px; font-weight:700; margin:6px 0 2px; line-height:1.25}
+.hero .s{font-size:13px; color:var(--text-2)}
+.row{display:flex; align-items:center; gap:10px; width:100%; min-height:var(--ctl-h); padding:10px 12px; text-align:left;
+  background:transparent; color:inherit; font:inherit; cursor:pointer; border:0; border-bottom:var(--border-w) solid var(--border)}
+.row:last-child{border-bottom:0}
+.row:active{background:var(--surface-2)}
+.thumb{width:40px;height:40px;flex:0 0 auto;display:grid;place-items:center;border-radius:var(--radius-ctl);
+  border:var(--border-w) solid var(--border); background:var(--surface-2); font-family:var(--font-head); font-weight:700; font-size:15px}
+.g{flex:1; min-width:0}
+.n{display:block; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.s{display:block; font-size:11.5px; color:var(--text-3); margin-top:2px}
+.qty{font-family:var(--font-head); font-size:17px; font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap}
+.qty small{font-size:11px; font-weight:400; color:var(--text-3)}
+.pill{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:4px 9px; white-space:nowrap;
+  border-radius:var(--radius-pill); border:var(--border-w) solid transparent; font-family:var(--font-mono)}
+.p-warn{background:var(--warn-soft); color:var(--warn); border-color:var(--warn-soft)}
+.p-danger{background:var(--danger-soft); color:var(--danger); border-color:var(--danger-soft)}
+.p-success{background:var(--success-soft); color:var(--success); border-color:var(--success-soft)}
+.p-info{background:var(--info-soft); color:var(--info); border-color:var(--info-soft)}
+.p-accent{background:var(--accent-soft); color:var(--accent); border-color:var(--accent-soft)}
+.p-plain{background:var(--surface-2); color:var(--text-3); border-color:var(--border)}
+.ic{width:20px;height:20px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:var(--icon-stroke);
+  stroke-linecap:var(--icon-cap); stroke-linejoin:var(--icon-cap)}
+.ic-sm{width:16px;height:16px}
+.btn{min-height:var(--ctl-h); padding:0 14px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  border:var(--border-w) solid var(--border); border-radius:var(--radius-ctl); background:var(--surface); color:var(--text);
+  box-shadow:var(--shadow-ctl); font:inherit; font-size:13.5px; font-weight:600; cursor:pointer; transition:transform var(--dur) var(--ease)}
+.btn:active{transform:scale(.97); box-shadow:var(--shadow-press)}
+.btn.primary{background:var(--primary); color:var(--on-primary); border-color:var(--primary)}
+.btn.soft{background:var(--surface-2)}
+.btnrow{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap)}
+.btnrow .btn{flex-direction:column; gap:4px; font-size:11.5px; padding:10px 4px; text-align:center}
+.chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{min-height:38px; padding:0 12px; border:var(--border-w) solid var(--border); border-radius:var(--radius-pill);
+  background:var(--surface); color:var(--text-2); font:inherit; font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap; box-shadow:var(--shadow-ctl)}
+.chip[aria-pressed="true"]{background:var(--primary); color:var(--on-primary); border-color:var(--primary)}
+.search{display:flex; align-items:center; gap:8px; min-height:var(--ctl-h); padding:0 12px; margin-bottom:10px;
+  background:var(--surface); border:var(--border-w) solid var(--border); border-radius:var(--radius-ctl); box-shadow:var(--shadow-ctl)}
+.search input{border:0; outline:0; background:transparent; font:inherit; font-size:14.5px; width:100%; color:var(--text)}
+.search .ic{color:var(--text-3)}
+.calweek,.calgrid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px}
+.calweek span{font-size:10.5px; color:var(--text-3); text-align:center; letter-spacing:var(--label-tracking); text-transform:var(--label-transform)}
+.calgrid{padding-top:6px}
+.day{aspect-ratio:1/1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  background:transparent; border:var(--border-w) solid transparent; border-radius:var(--radius-ctl); color:var(--text-2);
+  font:inherit; font-size:13px; font-variant-numeric:tabular-nums; cursor:pointer}
+.day .dm{display:flex; gap:2px; height:5px}
+.day .dm i{width:4px;height:4px;border-radius:50%;display:block}
+.day.today{background:var(--primary-soft); border-color:var(--primary); color:var(--text); font-weight:700}
+.day.sel{background:var(--primary); color:var(--on-primary); border-color:var(--primary)}
+.day[disabled]{opacity:.35; cursor:default}
+.tog{display:flex; align-items:center; gap:10px; padding:10px 12px; min-height:var(--ctl-h); cursor:pointer;
+  border-bottom:var(--border-w) solid var(--border)}
+.tog:last-child{border-bottom:0}
+.sw{width:44px;height:26px;flex:0 0 auto;border-radius:var(--radius-pill); background:var(--surface-2);
+  border:var(--border-w) solid var(--border); position:relative}
+.sw i{position:absolute; top:1px; left:1px; width:18px; height:18px; border-radius:50%; background:var(--surface);
+  border:var(--border-w) solid var(--border); transition:transform var(--dur) var(--ease)}
+.tog[aria-checked="true"] .sw{background:var(--success)}
+.tog[aria-checked="true"] .sw i{transform:translateX(16px)}
+.tog[aria-checked="true"] .n{text-decoration:line-through; color:var(--text-3)}
+nav{position:sticky; bottom:0; z-index:4; margin-top:auto; display:grid; grid-template-columns:repeat(4,1fr); gap:4px;
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom)); background:var(--nav-bg); backdrop-filter:blur(12px);
+  border-top:var(--border-w) solid var(--border)}
+.tab{min-height:56px; border:var(--border-w) solid transparent; border-radius:var(--radius-ctl); background:transparent;
+  color:var(--text-3); font:inherit; font-size:10.5px; font-weight:700; letter-spacing:var(--label-tracking);
+  text-transform:var(--label-transform); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  cursor:pointer; position:relative}
+.tab[aria-selected="true"]{background:var(--primary-soft); color:var(--text); border-color:var(--primary)}
+.cnt{position:absolute; top:4px; left:calc(50% + 8px); min-width:18px; height:18px; padding:0 4px; background:var(--danger);
+  color:#fff; border-radius:var(--radius-pill); font-size:10px; font-family:var(--font-mono); display:grid; place-items:center}
+.scrim{position:fixed; inset:0; background:rgba(8,12,20,.45); opacity:0; pointer-events:none; transition:opacity var(--dur) var(--ease); z-index:8}
+.scrim.open{opacity:1; pointer-events:auto}
+.sheet{position:fixed; left:50%; transform:translate(-50%,102%); bottom:0; width:100%; max-width:430px; z-index:9;
+  background:var(--surface); border-top:var(--border-w) solid var(--border-strong); border-radius:var(--radius-card) var(--radius-card) 0 0;
+  max-height:88vh; overflow-y:auto; padding:14px 16px calc(24px + env(safe-area-inset-bottom));
+  transition:transform var(--dur) var(--ease); box-shadow:0 -16px 40px -24px rgba(0,0,0,.6)}
+.sheet.open{transform:translate(-50%,0)}
+.grip{width:44px;height:4px;border-radius:var(--radius-pill); background:var(--border-strong); margin:0 auto 12px}
+.sheet h3{font-family:var(--font-head); font-size:19px; margin:0 0 4px}
+.kv{display:flex; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:var(--border-w) solid var(--border); font-size:13.5px}
+.kv span:first-child{color:var(--text-3)}
+.note{font-size:11.5px; color:var(--text-3); margin-top:10px}
+.toast{position:fixed; left:50%; bottom:104px; transform:translate(-50%,10px); z-index:10; background:var(--text); color:var(--bg);
+  font-size:13px; padding:10px 16px; border-radius:var(--radius-pill); opacity:0; pointer-events:none; transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease)}
+.toast.open{opacity:1; transform:translate(-50%,0)}
+/* 主题选择器 */
+.themegrid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px}
+.tcard{text-align:left; padding:10px; border:var(--border-w) solid var(--border); border-radius:var(--radius-ctl);
+  background:var(--surface-2); cursor:pointer; font:inherit; color:inherit; box-shadow:var(--shadow-ctl)}
+.tcard[aria-pressed="true"]{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-soft)}
+.tcard b{display:block; font-size:13px; font-family:var(--font-head)}
+.tcard small{display:block; font-size:10.5px; color:var(--text-3); margin-top:2px}
+.sw5{display:flex; gap:4px; margin-bottom:7px}
+.sw5 i{width:18px;height:18px;border-radius:4px; border:1px solid rgba(0,0,0,.18); display:block}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none !important; animation:none !important}}
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-task" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12.5l3 3 5-6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5h3M20 8V5h-3M4 16v3h3M20 16v3h-3M3 12h18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M4 5h2l2 10h10l2-7H7"/><circle cx="9" cy="19" r="1.5"/><circle cx="18" cy="19" r="1.5"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><circle cx="12" cy="15" r="1"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-13 0 9-5 14-14 13z"/><path d="M5 19c4-4 7-6 11-7"/></symbol>
+</svg>
+
+<div class="app">
+  <header>
+    <div class="brandrow">
+      <div class="brand">HOME<em>OPS</em> 家庭仓管日历</div>
+      <button class="themebtn" id="themeBtn" aria-haspopup="dialog">
+        <svg class="ic ic-sm" aria-hidden="true"><use href="#i-palette"/></svg><span id="themeName">瑞士极简</span>
+        <span class="dots8" id="themeDots"></span>
+      </button>
+    </div>
+    <h1 class="page" id="pageTitle">今日</h1>
+    <div class="hd-sub" id="hdSub">9 月 21 日 周一 · 4 件事要做</div>
+    <div class="stats">
+      <div class="stat warn"><b id="kExp">2</b><span>临期</span></div>
+      <div class="stat"><b id="kLow">1</b><span>缺货</span></div>
+      <div class="stat ok"><b id="kTask">4</b><span>待办</span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="v-today" role="tabpanel" aria-labelledby="t-today">
+      <div class="block">
+        <div class="hero">
+          <div class="k">最该先做的一件事</div>
+          <div class="t" id="heroTitle">先吃掉那两根黄瓜</div>
+          <div class="s" id="heroSub">明天到期 · 冰箱 · 处理掉就不浪费</div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-head"><h2>赏味期限</h2><small id="expMeta">—</small></div>
+        <div class="card" id="listExp"></div>
+      </div>
+      <div class="block">
+        <div class="block-head"><h2>该补货了</h2><small>低于你设的阈值</small></div>
+        <div class="card" id="listLow"></div>
+      </div>
+      <div class="block">
+        <div class="block-head"><h2>随手记</h2><small>AI 认错可当场改</small></div>
+        <div class="btnrow">
+          <button class="btn soft" data-act="voice"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg><span>说一句</span></button>
+          <button class="btn soft" data-act="scan"><svg class="ic" aria-hidden="true"><use href="#i-scan"/></svg><span>扫条码</span></button>
+          <button class="btn primary" data-act="manual"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg><span>手动填</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="v-cal" role="tabpanel" aria-labelledby="t-cal" hidden>
+      <div class="block">
+        <div class="block-head"><h2 id="calMonth">—</h2><small>点日期看当天</small></div>
+        <div class="card" style="padding:12px">
+          <div class="calweek"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+          <div class="calgrid" id="calGrid"></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-head"><h2 id="dayHead">当日事件</h2><small id="dayCount">—</small></div>
+        <div class="card" id="listDay"></div>
+      </div>
+    </section>
+
+    <section id="v-stock" role="tabpanel" aria-labelledby="t-stock" hidden>
+      <div class="block">
+        <div class="search">
+          <svg class="ic ic-sm" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="q" type="search" placeholder="找东西：黄瓜 / 冰箱 / 药品" aria-label="搜索库存">
+        </div>
+        <div class="chips" id="locChips" role="group" aria-label="地点筛选"></div>
+        <div class="card" id="listItems"></div>
+        <p class="note" id="stockNote"></p>
+      </div>
+    </section>
+
+    <section id="v-task" role="tabpanel" aria-labelledby="t-task" hidden>
+      <div class="block">
+        <div class="block-head"><h2>今天到期</h2><small id="mToday">—</small></div>
+        <div class="card" id="listToday"></div>
+      </div>
+      <div class="block">
+        <div class="block-head"><h2>定期家务</h2><small>到点自动出现</small></div>
+        <div class="card" id="listChore"></div>
+      </div>
+      <div class="block">
+        <div class="block-head"><h2>库存联动</h2><small>用完自动生成</small></div>
+        <div class="card" id="listLinked"></div>
+      </div>
+    </section>
+  </main>
+
+  <nav role="tablist" aria-label="主导航">
+    <button class="tab" id="t-today" role="tab" aria-selected="true" aria-controls="v-today" data-v="today">
+      <svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>今日</span><span class="cnt" id="cToday"></span></button>
+    <button class="tab" id="t-cal" role="tab" aria-selected="false" aria-controls="v-cal" data-v="cal">
+      <svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><span>日历</span></button>
+    <button class="tab" id="t-stock" role="tab" aria-selected="false" aria-controls="v-stock" data-v="stock">
+      <svg class="ic" aria-hidden="true"><use href="#i-box"/></svg><span>库存</span></button>
+    <button class="tab" id="t-task" role="tab" aria-selected="false" aria-controls="v-task" data-v="task">
+      <svg class="ic" aria-hidden="true"><use href="#i-task"/></svg><span>待办</span><span class="cnt" id="cTask"></span></button>
+  </nav>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="grip"></div>
+  <div id="sheetBody"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-atomic="true"></div>
+
+<script>
+
+/* ============================ 演示数据 ============================ */
+var TODAY = new Date(2026, 8, 21);
+var LOCS = ['冰箱', '冷冻室', '储物柜', '药箱', '阳台'];
+var ITEMS = [
+  { id:1, name:'黄瓜', loc:'冰箱', qty:2, unit:'根', cat:'蔬菜', thr:0, batches:[{no:'B-0915', exp:'2026-09-22', qty:2, price:3.6}] },
+  { id:2, name:'纯牛奶 1L', loc:'冰箱', qty:1, unit:'盒', cat:'乳品', thr:2, batches:[{no:'B-0918', exp:'2026-09-25', qty:1, price:12.9}] },
+  { id:3, name:'鸡蛋', loc:'冰箱', qty:8, unit:'个', cat:'蛋类', thr:6, batches:[{no:'B-0912', exp:'2026-10-05', qty:8, price:15.8}] },
+  { id:4, name:'速冻水饺', loc:'冷冻室', qty:2, unit:'袋', cat:'主食', thr:1, batches:[{no:'B-0830', exp:'2027-03-01', qty:2, price:19.9}] },
+  { id:5, name:'净水器滤芯', loc:'储物柜', qty:0, unit:'支', cat:'耗材', thr:1, batches:[] },
+  { id:6, name:'洗衣液', loc:'储物柜', qty:1, unit:'瓶', cat:'日化', thr:1, batches:[{no:'B-0510', exp:'2028-05-10', qty:1, price:39.0}] },
+  { id:7, name:'布洛芬', loc:'药箱', qty:12, unit:'片', cat:'药品', thr:6, batches:[{no:'B-0402', exp:'2026-10-12', qty:12, price:0}] },
+  { id:8, name:'大米 5kg', loc:'储物柜', qty:1, unit:'袋', cat:'主食', thr:1, batches:[{no:'B-0701', exp:'2027-01-01', qty:1, price:45.0}] },
+  { id:9, name:'酸奶', loc:'冰箱', qty:3, unit:'杯', cat:'乳品', thr:2, batches:[{no:'B-0919', exp:'2026-09-26', qty:3, price:9.9}] },
+  { id:10, name:'西红柿', loc:'冰箱', qty:4, unit:'个', cat:'蔬菜', thr:0, batches:[{no:'B-0917', exp:'2026-09-24', qty:4, price:5.2}] }
+];
+var TASKS = [
+  { id:'t1', title:'吃掉那两根黄瓜', src:'临期处理', due:'2026-09-21', done:false, kind:'today' },
+  { id:'t2', title:'买纯牛奶 2 盒', src:'库存联动', due:'2026-09-21', done:false, kind:'today' },
+  { id:'t3', title:'给净水器换滤芯', src:'库存联动', due:'2026-09-23', done:false, kind:'linked' },
+  { id:'t4', title:'买净水器滤芯 1 支', src:'库存联动', due:'2026-09-23', done:false, kind:'linked' },
+  { id:'t5', title:'清理冰箱过期区', src:'定期家务', due:'2026-09-27', done:false, kind:'chore', cycle:'每周日' },
+  { id:'t6', title:'检查药箱有效期', src:'定期家务', due:'2026-10-01', done:false, kind:'chore', cycle:'每月 1 日' },
+  { id:'t7', title:'洗晾床单', src:'定期家务', due:'2026-09-24', done:true, kind:'chore', cycle:'每两周' }
+];
+var EVENTS = [
+  { date:'2026-09-21', type:'expiry', title:'黄瓜 临期' }, { date:'2026-09-21', type:'buy', title:'牛奶 补货' },
+  { date:'2026-09-22', type:'expiry', title:'黄瓜 到期' }, { date:'2026-09-23', type:'buy', title:'滤芯 补货' },
+  { date:'2026-09-23', type:'chore', title:'换滤芯' }, { date:'2026-09-24', type:'expiry', title:'西红柿 到期' },
+  { date:'2026-09-26', type:'care', title:'酸奶 最后食用' }, { date:'2026-09-27', type:'chore', title:'清理冰箱' },
+  { date:'2026-10-01', type:'chore', title:'查药箱' }, { date:'2026-10-12', type:'care', title:'布洛芬 过期' }
+];
+var TYPE_PILL = { expiry:'p-warn', buy:'p-info', chore:'p-accent', care:'p-success' };
+var TYPE_VAR = { expiry:'var(--warn)', buy:'var(--info)', chore:'var(--accent)', care:'var(--success)' };
+
+/* ============================ 主题注册表 ============================ */
+var THEMES = [
+  { id:'swiss',    name:'瑞士极简',   desc:'白纸黑字 · 专业工具',      sw:['#F1F3F5','#0F172A','#047857','#FFFFFF'] },
+  { id:'brutal',   name:'新粗野',     desc:'黑边硬投影 · 荧光黄',      sw:['#F4F1EA','#0A0A0A','#FFE94A','#2F6BFF'] },
+  { id:'clay',     name:'柔和黏土',   desc:'暖奶油 · 大圆角软弹',      sw:['#F6EFE6','#15803D','#FDBCB4','#6D5BD0'] },
+  { id:'kawaii',   name:'卡通粉',     desc:'少女心 · 圆润可爱',        sw:['#FFF1F6','#FF6FA5','#8B5CF6','#FFD1E3'] },
+  { id:'mecha',    name:'机甲 HUD',   desc:'深色霓虹 · 切角科技感',    sw:['#070B12','#00E5FF','#FFB020','#22E08A'] },
+  { id:'midnight', name:'暗夜护眼',   desc:'深色暖琥珀 · 关灯看',      sw:['#0F172A','#F0B44A','#7C6BF5','#4ADE80'] },
+  { id:'memphis',  name:'孟菲斯 80s', desc:'多彩几何 · 潮流张扬',      sw:['#FFFDF6','#FF71CE','#FFCE5C','#86CCCA'] },
+  { id:'glass',    name:'极光玻璃',   desc:'浅色通透 · 毛玻璃层次',    sw:['#EAF2FF','#1D4ED8','#0E9F6E','#FFC9DE'] }
+];
+function themeById(id){ for (var i=0;i<THEMES.length;i++){ if(THEMES[i].id===id) return THEMES[i]; } return THEMES[0]; }
+function applyTheme(id, quiet){
+  var t = themeById(id);
+  document.documentElement.setAttribute('data-theme', t.id);
+  $('#themeName').textContent = t.name;
+  $('#themeDots').innerHTML = t.sw.slice(0,4).map(function(c){ return '<i style="background:'+c+'"></i>'; }).join('');
+  try { localStorage.setItem('homeops-theme', t.id); } catch(e) {}
+  var cards = document.querySelectorAll('.tcard');
+  for (var i=0;i<cards.length;i++){ cards[i].setAttribute('aria-pressed', cards[i].dataset.tid===t.id ? 'true':'false'); }
+  if(!quiet) toast('已切换到「'+t.name+'」');
+}
+function openThemeSheet(){
+  var w = el('div');
+  var h = el('h3', null, '选择主题'); h.id='sheetTitle';
+  w.appendChild(h);
+  w.appendChild(el('p','note','全部主题共用同一套组件与语义令牌，切换只改 design token，不改功能代码。点一下即时预览。'));
+  var grid = el('div','themegrid');
+  THEMES.forEach(function(t){
+    var b = el('button','tcard'); b.type='button'; b.dataset.tid=t.id;
+    b.setAttribute('aria-pressed', document.documentElement.getAttribute('data-theme')===t.id ? 'true':'false');
+    b.innerHTML = '<span class="sw5">'+t.sw.map(function(c){ return '<i style="background:'+c+'"></i>'; }).join('')+'</span>'+
+      '<b>'+t.name+'</b><small>'+t.desc+'</small>';
+    b.addEventListener('click', function(){ applyTheme(t.id); });
+    grid.appendChild(b);
+  });
+  w.appendChild(grid);
+  var sys = el('p','note','当前：' + themeById(document.documentElement.getAttribute('data-theme')).name + '；选择会记住，下次打开还是它。');
+  w.appendChild(sys);
+  openSheet([w]);
+}
+
+/* ============================ 工具 ============================ */
+function $(s, r){ return (r||document).querySelector(s); }
+function el(t, c, x){ var n=document.createElement(t); if(c) n.className=c; if(x!=null) n.textContent=x; return n; }
+function p2(n){ return String(n).padStart(2,'0'); }
+function iso(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
+function daysTo(s){ return Math.round((new Date(s+'T00:00:00') - new Date(iso(TODAY)+'T00:00:00'))/86400000); }
+function expText(s){ var n=daysTo(s); if(n<0) return '过期 '+(-n)+' 天'; if(n===0) return '今天到期'; if(n===1) return '明天到期'; return '还剩 '+n+' 天'; }
+function expPill(s){ var n=daysTo(s); return n<=1 ? 'p-danger' : (n<=7 ? 'p-warn' : 'p-success'); }
+function firstExp(i){ var e=null; i.batches.forEach(function(b){ if(!e||b.exp<e) e=b.exp; }); return e; }
+function ic(id, cls){ return '<svg class="ic '+(cls||'')+'" aria-hidden="true"><use href="#'+id+'"/></svg>'; }
+var toastTimer;
+function toast(m){ var t=$('#toast'); t.textContent=m; t.classList.add('open'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ t.classList.remove('open'); }, 1800); }
+
+/* ============================ 今日 ============================ */
+function renderToday(){
+  var exp = ITEMS.filter(function(i){ return i.qty>0 && firstExp(i) && daysTo(firstExp(i))<=7; })
+                 .sort(function(a,b){ return firstExp(a)<firstExp(b) ? -1 : 1; });
+  var low = ITEMS.filter(function(i){ return i.qty<=i.thr; });
+  var open = TASKS.filter(function(t){ return !t.done && t.due<=iso(TODAY); });
+  $('#kExp').textContent = exp.length; $('#kLow').textContent = low.length; $('#kTask').textContent = open.length;
+  $('#cToday').textContent = exp.length ? String(exp.length) : '';
+  $('#cTask').textContent = open.length ? String(open.length) : '';
+  $('#hdSub').textContent = '9 月 21 日 周一 · ' + open.length + ' 件事要做';
+  $('#expMeta').textContent = exp.length ? (exp.length + ' 项 · 按到期日排') : '暂无';
+  var w = exp[0];
+  if (w){ $('#heroTitle').textContent = '先吃掉那 ' + w.qty + ' ' + w.unit + w.name;
+          $('#heroSub').textContent = expText(firstExp(w)) + ' · ' + w.loc + ' · 处理掉就不浪费'; }
+  else { $('#heroTitle').textContent = '冰箱很干净'; $('#heroSub').textContent = '这周没有临期的东西'; }
+
+  var le = $('#listExp'); le.innerHTML='';
+  if (!exp.length) le.appendChild(el('div','note','暂时没有临期物品。'));
+  exp.forEach(function(i){
+    var b = el('button','row'); b.type='button';
+    b.innerHTML = '<span class="thumb">'+i.name.slice(0,1)+'</span>'+
+      '<span class="g"><span class="n">'+i.name+' · '+i.qty+' '+i.unit+'</span>'+
+      '<span class="s">'+i.loc+' · '+expText(firstExp(i))+' · '+i.batches.length+' 个批次</span></span>'+
+      '<span class="pill '+expPill(firstExp(i))+'">'+expText(firstExp(i))+'</span>'+
+      '<span class="pill p-success" data-role="done">已处理</span>';
+    b.setAttribute('aria-label', i.name+'，'+expText(firstExp(i))+'，查看批次');
+    b.addEventListener('click', function(e){
+      if (e.target.dataset.role==='done'){ i.qty=Math.max(0,i.qty-1); renderAll(); toast('已登记处理 1 '+i.unit+'：'+i.name); return; }
+      openItem(i);
+    });
+    le.appendChild(b);
+  });
+
+  var ll = $('#listLow'); ll.innerHTML='';
+  if (!low.length) ll.appendChild(el('div','note','库存都在阈值之上。'));
+  low.forEach(function(i){
+    var b = el('button','row'); b.type='button';
+    b.innerHTML = '<span class="thumb">'+i.name.slice(0,1)+'</span>'+
+      '<span class="g"><span class="n">'+i.name+'</span><span class="s">'+i.loc+' · 现有 '+i.qty+' '+i.unit+' · 阈值 '+i.thr+'</span></span>'+
+      '<span class="pill p-danger">需要买</span><span class="pill p-info" data-role="cart">加入清单</span>';
+    b.addEventListener('click', function(e){
+      if (e.target.dataset.role==='cart'){ toast('已加入购物清单：'+i.name); e.stopPropagation(); return; }
+      openItem(i);
+    });
+    ll.appendChild(b);
+  });
+}
+
+/* ============================ 日历 ============================ */
+var selDate = iso(TODAY);
+function renderCal(){
+  var y=TODAY.getFullYear(), m=TODAY.getMonth();
+  $('#calMonth').textContent = y + ' 年 ' + p2(m+1) + ' 月';
+  var start=(new Date(y,m,1).getDay()+6)%7, days=new Date(y,m+1,0).getDate(), prev=new Date(y,m,0).getDate();
+  var g=$('#calGrid'); g.innerHTML='';
+  for (var i=start-1;i>=0;i--){ var d=el('div','day',String(prev-i)); d.setAttribute('aria-hidden','true'); g.appendChild(d); }
+  for (var dd=1; dd<=days; dd++){
+    var ds = y+'-'+p2(m+1)+'-'+p2(dd);
+    var evs = EVENTS.filter(function(e){ return e.date===ds; });
+    var b = el('button','day'); b.type='button';
+    var marks = '<span class="dm">'+evs.slice(0,3).map(function(e){ return '<i style="background:'+TYPE_VAR[e.type]+'"></i>'; }).join('')+'</span>';
+    b.innerHTML = '<span>'+dd+'</span>'+marks;
+    b.setAttribute('aria-label',(m+1)+'月'+dd+'日，'+evs.length+' 个事件'+(ds===iso(TODAY)?'，今天':''));
+    if (ds===iso(TODAY)) b.classList.add('today');
+    if (ds===selDate) b.classList.add('sel');
+    b.addEventListener('click', function(ds2){ return function(){ selDate=ds2; renderCal(); }; }(ds));
+    g.appendChild(b);
+  }
+  var tail=(7-((start+days)%7))%7;
+  for (var t=1;t<=tail;t++){ var d2=el('div','day',String(t)); d2.setAttribute('aria-hidden','true'); g.appendChild(d2); }
+  renderDay();
+}
+function renderDay(){
+  var evs = EVENTS.filter(function(e){ return e.date===selDate; });
+  $('#dayHead').textContent = selDate.slice(5).replace('-','月')+'日 事件';
+  $('#dayCount').textContent = evs.length ? evs.length+' 条' : '空';
+  var box=$('#listDay'); box.innerHTML='';
+  if (!evs.length){ box.appendChild(el('div','note','这一天没有安排。')); return; }
+  evs.forEach(function(e){
+    var r=el('div','row');
+    r.innerHTML='<span class="thumb">'+ic('i-leaf')+'</span>'+
+      '<span class="g"><span class="n">'+e.title+'</span><span class="s">'+e.date+'</span></span>'+
+      '<span class="pill '+TYPE_PILL[e.type]+'">'+(e.type==='expiry'?'临期':e.type==='buy'?'采购':e.type==='chore'?'家务':'耗材')+'</span>';
+    box.appendChild(r);
+  });
+}
+
+/* ============================ 库存 ============================ */
+var locFilter='全部', kw='';
+function renderChips(){
+  var box=$('#locChips'); box.innerHTML='';
+  ['全部'].concat(LOCS).forEach(function(l){
+    var b=el('button','chip',l); b.type='button'; b.setAttribute('aria-pressed', locFilter===l?'true':'false');
+    b.addEventListener('click', function(){ locFilter=l; renderStock(); });
+    box.appendChild(b);
+  });
+}
+function renderStock(){
+  renderChips();
+  var list = ITEMS.filter(function(i){
+    return (locFilter==='全部'||i.loc===locFilter) && (kw===''||i.name.indexOf(kw)>=0||i.loc.indexOf(kw)>=0||i.cat.indexOf(kw)>=0);
+  }).sort(function(a,b){ var ea=firstExp(a)||'9999', eb=firstExp(b)||'9999'; return ea<eb?-1:1; });
+  var box=$('#listItems'); box.innerHTML='';
+  if (!list.length) box.appendChild(el('div','note','没有匹配的物品。'));
+  list.forEach(function(i){
+    var e=firstExp(i);
+    var b=el('button','row'); b.type='button';
+    b.innerHTML='<span class="thumb">'+i.name.slice(0,1)+'</span>'+
+      '<span class="g"><span class="n">'+i.name+'</span><span class="s">'+i.loc+' · '+i.cat+(i.batches.length?' · '+i.batches.length+' 个批次':' · 无批次')+'</span></span>'+
+      '<span class="qty">'+i.qty+'<small>'+i.unit+'</small></span>'+
+      '<span class="pill '+(i.qty<=i.thr?'p-danger':(e?expPill(e):'p-plain'))+'">'+(i.qty<=i.thr?'缺货':(e?expText(e):'无批次'))+'</span>';
+    b.addEventListener('click', function(){ openItem(i); });
+    box.appendChild(b);
+  });
+  $('#stockNote').textContent = '共 '+list.length+' 项；默认 FEFO（先过期先出）排序。';
+}
+
+/* ============================ 待办 ============================ */
+function taskRow(t){
+  var r=el('div','tog'); r.setAttribute('role','checkbox'); r.setAttribute('tabindex','0'); r.setAttribute('aria-checked', t.done?'true':'false');
+  r.innerHTML='<span class="sw"><i></i></span><span class="g"><span class="n">'+t.title+'</span>'+
+    '<span class="s">'+t.src+' · '+(t.cycle?t.cycle+' · ':'')+'截止 '+t.due.slice(5).replace('-','/')+'</span></span>'+
+    '<span class="pill '+(t.src==='临期处理'?'p-warn':t.src==='库存联动'?'p-info':'p-accent')+'">'+t.src+'</span>';
+  function tg(){ t.done=!t.done; renderAll(); toast(t.done?'已完成：'+t.title:'已恢复：'+t.title); }
+  r.addEventListener('click', tg);
+  r.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); tg(); } });
+  return r;
+}
+function renderTasks(){
+  var groups=[['#listToday', TASKS.filter(function(t){return t.kind==='today';})],
+              ['#listChore', TASKS.filter(function(t){return t.kind==='chore';})],
+              ['#listLinked',TASKS.filter(function(t){return t.kind==='linked';})]];
+  $('#mToday').textContent = TASKS.filter(function(t){return t.kind==='today'&&!t.done;}).length+' 项未完成';
+  groups.forEach(function(g){
+    var box=$(g[0]); box.innerHTML='';
+    if (!g[1].length) box.appendChild(el('div','note','暂无。'));
+    g[1].forEach(function(t){ box.appendChild(taskRow(t)); });
+  });
+}
+
+/* ============================ 抽屉 ============================ */
+function openSheet(nodes){
+  var s=$('#sheet'), b=$('#sheetBody'); b.innerHTML=''; nodes.forEach(function(n){ b.appendChild(n); });
+  s.hidden=false; requestAnimationFrame(function(){ s.classList.add('open'); $('#scrim').classList.add('open'); });
+  $('#scrim').addEventListener('click', closeSheet, { once:true });
+}
+function closeSheet(){
+  var s=$('#sheet'); s.classList.remove('open'); $('#scrim').classList.remove('open');
+  setTimeout(function(){ s.hidden=true; }, 200);
+}
+function openItem(i){
+  var w=el('div');
+  var h=el('h3',null,i.name); h.id='sheetTitle';
+  w.appendChild(h);
+  w.appendChild(el('p','note', i.loc+' · '+i.cat+' · 现有 '+i.qty+' '+i.unit+'（阈值 '+i.thr+'）'));
+  if (i.batches.length){
+    i.batches.slice().sort(function(a,b){ return a.exp<b.exp?-1:1; }).forEach(function(b){
+      var kv=el('div','kv');
+      kv.innerHTML='<span>'+b.no+' · 到期 '+b.exp+'</span><span>'+b.qty+' '+i.unit+'</span>';
+      w.appendChild(kv);
+    });
+  } else { w.appendChild(el('p','note','还没有批次，先入库才会产生库存。')); }
+  var bs=el('div','btnrow'); bs.style.marginTop='14px';
+  var bi=el('button','btn'); bi.type='button'; bi.innerHTML=ic('i-in')+'<span>入库 +1</span>';
+  var bo=el('button','btn'); bo.type='button'; bo.innerHTML=ic('i-out')+'<span>领用 -1</span>';
+  var bc=el('button','btn soft'); bc.type='button'; bc.innerHTML=ic('i-x')+'<span>关闭</span>';
+  bi.addEventListener('click', function(){
+    if (i.batches.length) i.batches[0].qty+=1;
+    else i.batches.push({ no:'B-'+iso(TODAY).slice(2).replace(/-/g,''), exp:'2027-09-21', qty:1, price:0 });
+    i.qty+=1; renderAll(); openItem(i); toast('入库 1 '+i.unit+'：'+i.name);
+  });
+  bo.addEventListener('click', function(){
+    if (i.qty<=0){ toast('库存已经是 0'); return; }
+    i.qty-=1;
+    for (var k=0;k<i.batches.length;k++){ if (i.batches[k].qty>0){ i.batches[k].qty-=1; break; } }
+    renderAll(); openItem(i); toast('领用 1 '+i.unit+'：'+i.name);
+  });
+  bc.addEventListener('click', closeSheet);
+  bs.appendChild(bi); bs.appendChild(bo); bs.appendChild(bc);
+  w.appendChild(bs);
+  w.appendChild(el('p','note','真实实现：一次请求同时写 stock_transactions 与批次数量，带幂等键；库存归零自动生成「买 + 换」两条待办。'));
+  openSheet([w]);
+}
+function openQuickAdd(){
+  var w=el('div');
+  var h=el('h3',null,'快速录入'); h.id='sheetTitle';
+  w.appendChild(h); w.appendChild(el('p','note','手动兜底入口：名称必填，其余可后补。'));
+  var f=el('div'); f.style.marginTop='10px';
+  f.innerHTML='<div class="kv"><span>名称</span><span><input id="qaName" placeholder="例如 酸奶" style="font:inherit;text-align:right;border:0;border-bottom:var(--border-w) solid var(--border);background:transparent;color:var(--text);width:150px"></span></div>'+
+    '<div class="kv"><span>数量</span><span><input id="qaQty" type="number" value="1" min="1" style="font:inherit;text-align:right;border:0;border-bottom:var(--border-w) solid var(--border);background:transparent;color:var(--text);width:150px"></span></div>'+
+    '<div class="kv"><span>放哪儿</span><span><select id="qaLoc" style="font:inherit;background:var(--surface);color:var(--text);border:var(--border-w) solid var(--border);border-radius:var(--radius-ctl);padding:4px">'+LOCS.map(function(l){return '<option>'+l+'</option>';}).join('')+'</select></span></div>'+
+    '<div class="kv"><span>到期日</span><span><input id="qaExp" type="date" value="2026-10-01" style="font:inherit;background:var(--surface);color:var(--text);border:var(--border-w) solid var(--border);border-radius:var(--radius-ctl);padding:4px"></span></div>';
+  w.appendChild(f);
+  var go=el('button','btn primary'); go.type='button'; go.textContent='入库'; go.style.width='100%'; go.style.marginTop='14px';
+  go.addEventListener('click', function(){
+    var n=($('#qaName')).value.trim(); if(!n){ toast('名称不能为空'); return; }
+    var qy=Number(($('#qaQty')).value)||1, ex=($('#qaExp')).value;
+    ITEMS.push({ id:Date.now(), name:n, loc:($('#qaLoc')).value, qty:qy, unit:'个', cat:'未分类', thr:0,
+      batches:[{ no:'B-'+iso(TODAY).slice(2).replace(/-/g,''), exp:ex, qty:qy, price:0 }] });
+    EVENTS.push({ date:ex, type:'expiry', title:n+' 到期' });
+    closeSheet(); renderAll(); toast('已入库：'+n+' '+qy+' 个');
+  });
+  w.appendChild(go);
+  var cc=el('button','btn soft'); cc.type='button'; cc.textContent='取消'; cc.style.width='100%'; cc.style.marginTop='10px';
+  cc.addEventListener('click', closeSheet); w.appendChild(cc);
+  openSheet([w]);
+}
+
+/* ============================ 导航 / 初始化 ============================ */
+var TITLES = { today:'今日', cal:'日历', stock:'库存', task:'待办' };
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    var v=tab.dataset.v;
+    document.querySelectorAll('.tab').forEach(function(t){ t.setAttribute('aria-selected', t===tab?'true':'false'); });
+    ['today','cal','stock','task'].forEach(function(k){ $('#v-'+k).hidden = (k!==v); });
+    $('#pageTitle').textContent = TITLES[v];
+    $('#main').scrollTop = 0;
+  });
+});
+document.querySelectorAll('[data-act]').forEach(function(b){
+  b.addEventListener('click', function(){
+    if (b.dataset.act==='manual') openQuickAdd();
+    else toast(b.dataset.act==='voice' ? '语音录入是 P1，还没接上' : '扫码是 P1，先手动输入吧');
+  });
+});
+$('#themeBtn').addEventListener('click', openThemeSheet);
+$('#q').addEventListener('input', function(e){ kw=e.target.value.trim(); renderStock(); });
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closeSheet(); });
+
+function renderAll(){ renderToday(); renderCal(); renderStock(); renderTasks(); }
+var saved=null;
+try { saved = localStorage.getItem('homeops-theme'); } catch(e) {}
+var hashMatch = /theme=([a-z]+)/.exec(location.hash || '');
+applyTheme((hashMatch && hashMatch[1]) || saved || 'swiss', true);
+renderAll();
+
+</script>
+</body>
+</html>
